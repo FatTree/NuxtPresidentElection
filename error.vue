@@ -13,3 +13,6 @@ const props = defineProps({
         <NuxtLink to="/">Go back home</NuxtLink>
     </div>
 </template>
+<style lang="scss" scoped>
+    
+</style>

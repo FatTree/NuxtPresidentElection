@@ -1,14 +1,13 @@
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div class="Ticket">
-    <h1>Ticket</h1>
-  </div>
+    <div class="Area">
+        <h1>Area</h1>
+    </div>
 </template>
 
 <style scoped lang="scss">
-  .Ticket {
+    .Area {
         border: 1px solid blueviolet
     }
 </style>

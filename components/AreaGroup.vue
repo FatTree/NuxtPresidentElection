@@ -1,13 +1,13 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="PresidentList">
-    <h1>PresidentList</h1>
-  </div>
+    <div class="AreaGroup">
+        <h1>AreaGroup</h1>
+    </div>
 </template>
 
 <style scoped lang="scss">
-  .PresidentList {
+    .AreaGroup {
         border: 1px solid blueviolet
     }
 </style>

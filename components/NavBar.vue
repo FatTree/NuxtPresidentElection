@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  const { data, pending, error, refresh, clear } = await useAsyncData(
-    'mountains',
-    () => $fetch('https://db.cec.gov.tw/static/elections/list/ELC_P0.json')
-  );
-  const list = data.value[0].theme_items
-  console.log(list);
-  
+import { getElectionsList } from '~/services'
+const { data, pending, error, refresh, clear } = await useAsyncData(
+  'mountains',
+  () => $fetch('https://db.cec.gov.tw/static/elections/list/ELC_P0.json')
+);
+const lists = getElectionsList();
+const list = data.value[0].theme_items;
 </script>
 
 <template>

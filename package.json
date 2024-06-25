@@ -12,10 +12,12 @@
   "devDependencies": {
     "@nuxt/types": "^2.17.3",
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
+    "@pinia/nuxt": "^0.5.1",
     "@types/lodash.debounce": "^4.0.9",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
     "nuxt": "^3.9.3",
+    "pinia": "^2.1.7",
     "sass": "^1.77.2",
     "sass-loader": "^14.2.1",
     "vue": "^3.4.14",
@@ -26,8 +28,6 @@
     "nuxt": "^3.12.2",
     "nuxt-i18n": "^6.28.1",
     "vue": "^3.4.29",
-    "vue-router": "^4.3.3",
-    "@pinia/nuxt": "^0.5.1",
-    "pinia": "^2.1.7"
+    "vue-router": "^4.3.3"
   }
 }

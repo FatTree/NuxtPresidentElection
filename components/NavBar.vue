@@ -1,16 +1,26 @@
 <script setup lang="ts">
+import type { ElectionModel } from '~/models/data/ElectionModel';
 import { getElectionsList } from '~/services'
-const { data, pending, error, refresh, clear } = await useAsyncData(
-  'mountains',
-  () => $fetch('https://db.cec.gov.tw/static/elections/list/ELC_P0.json')
-);
-const lists = getElectionsList();
-const list = data.value[0].theme_items;
+
+const isPending: Ref<boolean> = ref(true);
+const list: Ref<ElectionModel[]> = ref([]);
+
+onMounted(async () => {
+  try {
+    const { data, isError } = await getElectionsList();
+    list.value = data[0].theme_items;
+  } catch (error) {
+    console.log(error)
+  } finally {
+    isPending.value = false;
+  }
+});
+
 </script>
 
 <template>
   <div class="navBar">
-    <div v-if="pending">loading...</div>
+    <div v-if="isPending">loading...</div>
     <nuxt-link 
       v-for="i in list" 
       :to="{

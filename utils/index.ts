@@ -10,10 +10,10 @@ import type { CodeModel } from '~/models/data/ElectionModel';
  * https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/4d83db17c1707e3defae5dc4d4e9c800/L/68_000_00_000_0000.json
  * type: L ,code: 68_000_00_000_0000
  */
-export const generateCode = (type: string, model: CodeModel): string => {
+export const generateCode = (model: CodeModel): string => {
     const {...code} = model;
-    let CODE = `${code.prv_code}_${code.city_code}_${code.area_code}_${code.dept_code}_${code.li_code}`;
-    console.log("CODE:", CODE);
+    let _CCode = `${code.prv_code}_${code.city_code}_${code.area_code}_${code.dept_code}_${code.li_code}`;
+    console.log("_CCode:", _CCode);
     
-    return CODE;
+    return _CCode;
 }

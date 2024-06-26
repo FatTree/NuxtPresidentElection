@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 const storeName = 'profile';
-export const useElectionList = defineStore(storeName, () => {
+export const useProfile = defineStore(storeName, () => {
 
     return {
         

@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   vite: {
     server: {
       proxy: {
-        '/elections/data': {
+        '/api': {
           target: 'https://db.cec.gov.tw/static/elections/data',
           changeOrigin: true
         }

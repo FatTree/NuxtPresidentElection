@@ -31,6 +31,9 @@ const {
     cityList,
     distList,
     vliList,
+    isCityListPending,
+    isDistListPending,
+    isVliListPending,
 } = storeToRefs(areaStore);
 
 onMounted( async() => {
@@ -53,13 +56,13 @@ onMounted( async() => {
     <div>
         <AreaGroup>
             <template #city>
-                <Area :id="id" :type="TYPE.CITY" :code="code" :list="cityList" />
+                <Area :id="id" :type="TYPE.CITY" :code="code" :list="cityList" :isPending="isCityListPending" />
             </template>
             <template #dist>
-                <Area :id="id" :type="TYPE.DISC" :code="code" :list="distList" />
+                <Area :id="id" :type="TYPE.DISC" :code="code" :list="distList" :isPending="isDistListPending" />
             </template>
             <template #vli>
-                <Area :id="id" :type="TYPE.VLI" :code="code" :list="vliList" />
+                <Area :id="id" :type="TYPE.VLI" :code="code" :list="vliList" :isPending="isVliListPending" />
             </template>
         </AreaGroup>
         <OverallGroup></OverallGroup>

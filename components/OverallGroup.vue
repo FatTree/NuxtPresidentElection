@@ -4,10 +4,17 @@
 <template lang="">
     <div class="OverallGroup">
         <h1>OverallGroup</h1>
+        <div>
+            <Profile />
+        </div>
+        <div>
+            <Ticket />
+        </div>
     </div>
 </template>
 <style scoped lang="scss">
     .OverallGroup {
         border: 1px solid blueviolet
     }
+    
 </style>

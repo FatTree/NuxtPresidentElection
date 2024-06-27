@@ -4,6 +4,9 @@
 <template>
     <div class="TicketGroup">
         <h1>TicketGroup</h1>
+        <Ticket />
+        <Ticket />
+        <Ticket />
     </div>
 </template>
 <style lang="scss" scoped>

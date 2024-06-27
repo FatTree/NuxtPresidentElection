@@ -19,6 +19,7 @@ const ELECTION_LIST_URL = 'https://db.cec.gov.tw/static/elections/list/ELC_P0.js
 const TICKET_URL = 'https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00';
 const AREA_URL = 'https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00';
 const PROFILE_URL = 'https://db.cec.gov.tw/static/elections/data/profiles/ELC/P0/00';
+const PARTY_COLOR = 'https://db.cec.gov.tw/static/webs/configs/party_colors.json';
 
 type responseModel = {
     isError: boolean,

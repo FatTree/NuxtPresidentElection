@@ -8,12 +8,14 @@ type Props = {
     type: string;
     code: string;
     list: AreaModel[];
+    isPending: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
     id: '4d83db17c1707e3defae5dc4d4e9c800',
     type: 'C',
     code: '00_000_00_000_0000',
     list: () => ([]),
+    isPending: false,
 });
 
 const overallStore = useOverall();
@@ -65,6 +67,7 @@ watch( selectedArea, async() => {
 <template>
     <div class="Area">
         <h1>Area: {{ type }}</h1>
+        <div v-show="isPending">loading...</div>
         <select v-model="selectedArea">
             <option 
                 v-for="(item, i) in list"

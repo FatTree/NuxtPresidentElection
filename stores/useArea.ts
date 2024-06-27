@@ -21,6 +21,10 @@ export const useArea = defineStore(storeName, () => {
     const distList: Ref<AreaModel[]> = ref([]);
     const vliList: Ref<AreaModel[]> = ref([]);
 
+    const isCityListPending: Ref<boolean> = ref(false);
+    const isDistListPending: Ref<boolean> = ref(false);
+    const isVliListPending: Ref<boolean> = ref(false);
+
     const selectedCity = ref();
     const selectedDist = ref();
     const selectedVli = ref();
@@ -30,16 +34,22 @@ export const useArea = defineStore(storeName, () => {
         try {
             switch (type) {
                 case TYPE.CITY:
+                    isCityListPending.value = true;
                     res = await getAreaList({id: OAId.value, type, code: NCode.value});
                     cityList.value = res.data[OACode.value];
+                    isCityListPending.value = false;
                     break;
                 case TYPE.DISC:
+                    isDistListPending.value = true;
                     res = await getAreaList({id: OAId.value, type, code: CCode.value});
                     distList.value = res.data[CCode.value];
+                    isDistListPending.value = false;
                     break;
                 case TYPE.VLI:
+                    isVliListPending.value = true; 
                     res = await getAreaList({id: OAId.value, type, code: CCode.value});
                     vliList.value = res.data[DCode.value];
+                    isVliListPending.value = false;
                     break;
                 default:
                     break;
@@ -67,6 +77,9 @@ export const useArea = defineStore(storeName, () => {
         cityList,
         distList,
         vliList,
+        isCityListPending,
+        isDistListPending,
+        isVliListPending,
         getArea,
     }
 });

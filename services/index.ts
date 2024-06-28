@@ -48,22 +48,29 @@ const getData = async (url: string): Promise<responseModel> => {
     }
 }
 
-export const getElectionsList = async(): Promise<responseModel> =>  {
+export const getElectionsData = async(): Promise<responseModel> =>  {
     const result: Promise<responseModel> = getData(ELECTION_LIST_URL);
     return result;
 }
 
-export const getProfileList = async (): Promise<responseModel> =>  {
-    const result: Promise<responseModel> = getData(PROFILE_URL);
+export const getColorData = async(): Promise<responseModel> =>  {
+    const result: Promise<responseModel> = getData(PARTY_COLOR);
     return result;
 }
 
-export const getTicketList = async (): Promise<responseModel> =>  {
-    const result: Promise<responseModel> = getData(TICKET_URL);
+export const getProfileData = async (params: reqParam): Promise<responseModel> =>  {
+    const { id, type, code } = params;
+    const result: Promise<responseModel> = getData(`${PROFILE_URL}/${id}/${type}/${code}.json`);
     return result;
 }
 
-export const getAreaList = async (params: reqParam): Promise<responseModel> =>  {
+export const getTicketData = async (params: reqParam): Promise<responseModel> =>  {
+    const { id, type, code } = params;
+    const result: Promise<responseModel> = getData(`${TICKET_URL}/${id}/${type}/${code}.json`);
+    return result;
+}
+
+export const getAreaData = async (params: reqParam): Promise<responseModel> =>  {
     const { id, type, code } = params;
     const result: Promise<responseModel> = getData(`${AREA_URL}/${id}/${type}/${code}.json`);
     return result;

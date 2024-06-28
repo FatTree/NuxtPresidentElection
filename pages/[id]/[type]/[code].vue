@@ -1,5 +1,4 @@
 <script lang="ts" setup>const route = useRoute();
-import { getAreaList } from '~/services'
 import { TYPE } from '~/assets/js/enum';
 import { useOverall } from '~/stores/useOverall';
 
@@ -36,9 +35,22 @@ const {
     isVliListPending,
 } = storeToRefs(areaStore);
 
-onMounted( async() => {
+// store
+const profileStore = useProfile();
+const {
+    NationProfile,
+    isNationProfilePending,
+} = storeToRefs(profileStore);
+const {
+    getProfile
+} = profileStore;
+
+onBeforeMount( () => {
     setIdTypeCode(id, "C", code);
+    // OACode.value = code;
     OAId.value = id;
+})
+onMounted( async() => {
     try {
         await getArea('C');
     } catch (error) {
@@ -55,6 +67,7 @@ onMounted( async() => {
     </div>
     <div>
         <AreaGroup>
+        <!-- put into next level -->
             <template #city>
                 <Area :id="id" :type="TYPE.CITY" :code="code" :list="cityList" :isPending="isCityListPending" />
             </template>
@@ -65,9 +78,9 @@ onMounted( async() => {
                 <Area :id="id" :type="TYPE.VLI" :code="code" :list="vliList" :isPending="isVliListPending" />
             </template>
         </AreaGroup>
-        <OverallGroup></OverallGroup>
+        <OverallGroup :id="id" :type="type" :code="code" />
         <Map></Map>
-        <TicketGroup></TicketGroup>
+        <!-- <TicketGroup></TicketGroup> -->
     </div>
 </template>
 

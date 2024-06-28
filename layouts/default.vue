@@ -1,4 +1,20 @@
 <script setup lang="ts">
+import { getColorData } from '~/services';
+
+// store
+const OAStore = useOverall();
+
+const { 
+    getColor
+} = OAStore;
+
+onBeforeMount(async () => {
+  try {
+    await getColor();
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 </script>
 

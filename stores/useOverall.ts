@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import type { PartyColorModel } from '~/models/data/ElectionModel';
+import { getColorData } from '~/services';
 
 const storeName = 'overall';
 export const useOverall = defineStore(storeName, () => {
@@ -10,6 +12,18 @@ export const useOverall = defineStore(storeName, () => {
     const CCode = ref('');
     const DCode = ref('');
     const VCode = ref('');
+
+    const OAColorTable: Ref<PartyColorModel[]> = ref([]);
+
+    const getColor = async() => {
+        try {
+            const res = await getColorData();
+            OAColorTable.value = res.data as PartyColorModel[];
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const setIdTypeCode = (id: string, type: string, code: string) => {
         OAId.value = id;
@@ -25,6 +39,8 @@ export const useOverall = defineStore(storeName, () => {
         CCode,
         DCode,
         VCode,
-        setIdTypeCode
+        OAColorTable,
+        setIdTypeCode,
+        getColor,
     }
 });

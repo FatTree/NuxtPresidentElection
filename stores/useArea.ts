@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import type { AreaModel } from '~/models/data/ElectionModel';
-import { getAreaList } from '~/services'
+import { getAreaData } from '~/services'
 import { useOverall } from './useOverall';
 import { TYPE } from '~/assets/js/enum';
 
@@ -35,19 +35,19 @@ export const useArea = defineStore(storeName, () => {
             switch (type) {
                 case TYPE.CITY:
                     isCityListPending.value = true;
-                    res = await getAreaList({id: OAId.value, type, code: NCode.value});
+                    res = await getAreaData({id: OAId.value, type, code: NCode.value});
                     cityList.value = res.data[OACode.value];
                     isCityListPending.value = false;
                     break;
                 case TYPE.DISC:
                     isDistListPending.value = true;
-                    res = await getAreaList({id: OAId.value, type, code: CCode.value});
+                    res = await getAreaData({id: OAId.value, type, code: CCode.value});
                     distList.value = res.data[CCode.value];
                     isDistListPending.value = false;
                     break;
                 case TYPE.VLI:
                     isVliListPending.value = true; 
-                    res = await getAreaList({id: OAId.value, type, code: CCode.value});
+                    res = await getAreaData({id: OAId.value, type, code: CCode.value});
                     vliList.value = res.data[DCode.value];
                     isVliListPending.value = false;
                     break;
@@ -59,18 +59,6 @@ export const useArea = defineStore(storeName, () => {
             
         }
     }
-
-    // const getCityList = async() => {
-    //     try {
-    //         const params = {id: OAId.value, type: OAType.value, code: OACode.value}
-    //         const res = await getAreaList(params);
-    //         cityList.value = res.data[OACode.value];
-    //         console.log(cityList.value);
-            
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
 
 
     return {

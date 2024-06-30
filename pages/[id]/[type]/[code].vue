@@ -1,6 +1,7 @@
 <script lang="ts" setup>const route = useRoute();
 import { TYPE } from '~/assets/js/enum';
 import { useOverall } from '~/stores/useOverall';
+import { useTicket } from '~/stores/useTicket';
 
 // router
 const id: string = route.params.id as string;
@@ -17,7 +18,6 @@ const {
     OAType,
     OACode
 } = storeToRefs(OAStore);
-
 const { 
     setIdTypeCode
 } = OAStore;
@@ -35,7 +35,6 @@ const {
     isVliListPending,
 } = storeToRefs(areaStore);
 
-// store
 const profileStore = useProfile();
 const {
     NationProfile,
@@ -45,11 +44,17 @@ const {
     getProfile
 } = profileStore;
 
+const ticketStore = useTicket();
+const {
+    getTicket
+} = ticketStore;
+
 onBeforeMount( async() => {
     setIdTypeCode(id, "C", code);
     // OACode.value = code;
     OAId.value = id;
     try {
+        await getTicket('L');
         await getArea('C');
     } catch (error) {
         console.log(error)

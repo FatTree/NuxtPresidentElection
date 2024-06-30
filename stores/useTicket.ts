@@ -10,6 +10,9 @@ export const useTicket = defineStore(storeName, () => {
     const {
         OAId,
         OACode,
+        CCode,
+        DCode,
+        VCode,
         NCode,
         OAColorTable
     } = storeToRefs(overall);
@@ -17,7 +20,14 @@ export const useTicket = defineStore(storeName, () => {
 
     // data
     const isNationTicketPending: Ref<boolean> = ref(false);
+    const isCityTicketPending: Ref<boolean> = ref(false);
+    const isDistTicketPending: Ref<boolean> = ref(false);
+    const isVliTicketPending: Ref<boolean> = ref(false);
+
     const nationalTicketList: Ref<TicketGeneratedModel[]> = ref([]);
+    const cityTicketList: Ref<TicketGeneratedModel[]> = ref([]);
+    const distTicketList: Ref<TicketGeneratedModel[]> = ref([]);
+    const vliTicketList: Ref<TicketGeneratedModel[]> = ref([]);
 
     // method
     const ticketListGenerator = (list: TicketModel[]): TicketGeneratedModel[] => {
@@ -64,21 +74,6 @@ export const useTicket = defineStore(storeName, () => {
             }
             ticketList.push(combine(pre, vice));
         }
-
-        // {
-        //     "cand_no": 1,
-        //     "ticket_num": 3690466,
-        //     "ticket_percent": 26.46,
-        //     "is_victor": " ",
-        //     "cand_name": "柯文哲",
-        //     "cand_edu": "博士",
-        //     "party_code": 350,
-        //     "party_name": "台灣民眾黨",
-        //     "is_current": "N",
-        //     "is_vice": " ",
-        //     "vice_name": "吳欣盈"
-        // }
-        
         return ticketList.sort( compare );
     }
 
@@ -88,22 +83,38 @@ export const useTicket = defineStore(storeName, () => {
             switch (type) {
                 case TYPE.NATION:
                     isNationTicketPending.value = true;
-                    // Ticket: /4d83db17c1707e3defae5dc4d4e9c800/N/00_000_00_000_0000.json
-                    res = await getTicketData({id: OAId.value, type:"N", code: OACode.value});
+                    res = await getTicketData({id: OAId.value, type: TYPE.NATION, code: OACode.value});
                     nationalTicketList.value = ticketListGenerator(res.data[OACode.value]);
                     isNationTicketPending.value = false;
-                    
                     break;
+
+                case TYPE.CITY:
+                    isCityTicketPending.value = true;
+                    res = await getTicketData({id: OAId.value, type: TYPE.CITY, code: OACode.value});
+                    cityTicketList.value = ticketListGenerator(res.data[OACode.value].filter((e: TicketModel) => (`${e.prv_code}_${e.city_code}_00_000_0000` === CCode.value)));
+                    isCityTicketPending.value = false;
+                    console.log(cityTicketList.value);
+                    break;
+
                 case TYPE.DISC:
-                    
+                    isDistTicketPending.value = true;
+                    res = await getTicketData({id: OAId.value, type: TYPE.DISC, code: CCode.value});
+                    distTicketList.value = ticketListGenerator(res.data[CCode.value].filter((e: TicketModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_0000` === DCode.value)));
+                    isDistTicketPending.value = false;
                     break;
+
                 case TYPE.VLI:
-                    
+                    isVliTicketPending.value = true;
+                    res = await getTicketData({id: OAId.value, type: TYPE.VLI, code: CCode.value});
+                    vliTicketList.value = ticketListGenerator(res.data[DCode.value].filter((e: TicketModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_${e.li_code}` === VCode.value)));
+                    isVliTicketPending.value = false;
                     break;
+
                 default:
                     break;
             }
         } catch (error) {
+            console.log(error);
             
         }
         
@@ -112,7 +123,13 @@ export const useTicket = defineStore(storeName, () => {
 
     return {
         nationalTicketList,
+        cityTicketList,
+        distTicketList,
+        vliTicketList,
         isNationTicketPending,
+        isCityTicketPending,
+        isDistTicketPending,
+        isVliTicketPending,
         getTicket
     }
 });

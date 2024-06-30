@@ -73,7 +73,7 @@ watch( selectedArea, async() => {
                 v-for="(item, i) in list"
                 :key="i" 
                 :value="item">
-                {{ item.area_name }}
+                {{ item.area_name }}: {{ item.prv_code }}-{{  item.city_code }}-{{ item.area_code }}-{{ item.dept_code }}-{{ item.li_code }}
             </option>
         </select>
     </div>

@@ -159,26 +159,7 @@ export type TicketModel = CodeModel & {
     is_vice:string
 }
 
-export type TicketGeneratedModel = CodeModel & {
-    tbox_no:string,
-    cand_no: number,
-    ticket_num: number,
-    ticket_percent: number,
-    is_victor:string,
-    ris_prv_code:string,
-    ris_city_code:string,
-    ris_area_code:string,
-    ris_dept_code:string,
-    area_name:string,
-    cand_id: number,
-    cand_name:string,
-    cand_sex:string,
-    cand_birthyear:string,
-    cand_edu:string,
-    party_code: number,
-    party_name:string,
-    is_current:string,
-    is_vice:string,
+export type TicketGeneratedModel = TicketModel & {
     vice_name: string,
     party_color: string,
 }

@@ -45,12 +45,10 @@ const {
     getProfile
 } = profileStore;
 
-onBeforeMount( () => {
+onBeforeMount( async() => {
     setIdTypeCode(id, "C", code);
     // OACode.value = code;
     OAId.value = id;
-})
-onMounted( async() => {
     try {
         await getArea('C');
     } catch (error) {

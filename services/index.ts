@@ -35,7 +35,6 @@ type reqParam = {
 const getData = async (url: string): Promise<responseModel> => {
     let isError = false;
     const result: responseModel = {isError, data: null};
-    console.log('request:', url);
     
     try {
         result.data = await $fetch(url);
@@ -43,7 +42,6 @@ const getData = async (url: string): Promise<responseModel> => {
         isError = true;
         result.data = error;
     } finally {
-        console.log('result:',result);
         return result;
     }
 }

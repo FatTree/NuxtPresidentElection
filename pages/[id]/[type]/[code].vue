@@ -54,7 +54,6 @@ onBeforeMount( async() => {
     // OACode.value = code;
     OAId.value = id;
     try {
-        await getTicket('L');
         await getArea('C');
     } catch (error) {
         console.log(error)

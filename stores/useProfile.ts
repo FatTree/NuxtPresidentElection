@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { TYPE } from '~/assets/js/enum';
 import { getProfileData } from '~/services';
 import { useOverall } from './useOverall';
+import type { ProfileModel } from '~/models/data/ElectionModel';
 
 const storeName = 'profile';
 export const useProfile = defineStore(storeName, () => {
@@ -10,12 +11,22 @@ export const useProfile = defineStore(storeName, () => {
     const {
         OAId,
         OACode,
+        CCode,
+        DCode,
+        VCode,
         NCode,
     } = storeToRefs(overall);
 
     // data
-    const NationProfile = ref();
+    const NationProfile: Ref<ProfileModel> = ref({} as ProfileModel);
+    const cityProfile: Ref<ProfileModel> = ref({} as ProfileModel);
+    const distProfile: Ref<ProfileModel> = ref({} as ProfileModel);
+    const vliProfile: Ref<ProfileModel> = ref({} as ProfileModel);
+
     const isNationProfilePending: Ref<boolean> = ref(false);
+    const isCityProfilePending: Ref<boolean> = ref(false);
+    const isDistProfilePending: Ref<boolean> = ref(false);
+    const isVliProfilePending: Ref<boolean> = ref(false);
 
     const getProfile = async (type: string) => {
         let res;
@@ -28,12 +39,28 @@ export const useProfile = defineStore(storeName, () => {
                     NationProfile.value = res.data[OACode.value][0];
                     isNationProfilePending.value = false;
                     break;
+
+                case TYPE.CITY:
+                    isCityProfilePending.value = true;
+                    res = await getProfileData({id: OAId.value, type, code: NCode.value});
+                    cityProfile.value = res.data[OACode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_000_0000` === CCode.value));
+                    isCityProfilePending.value = false;
+                    break;
+
                 case TYPE.DISC:
-                    
+                    isDistProfilePending.value = true;
+                    res = await getProfileData({id: OAId.value, type: TYPE.DISC, code: CCode.value});
+                    distProfile.value = res.data[CCode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_0000` === DCode.value));
+                    isDistProfilePending.value = false;
                     break;
+
                 case TYPE.VLI:
-                    
+                    isVliProfilePending.value = true;
+                    res = await getProfileData({id: OAId.value, type: TYPE.VLI, code: CCode.value});
+                    vliProfile.value = res.data[DCode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_${e.li_code}` === VCode.value));
+                    isVliProfilePending.value = false;
                     break;
+                    
                 default:
                     break;
             }
@@ -45,7 +72,13 @@ export const useProfile = defineStore(storeName, () => {
 
     return {
         NationProfile,
+        cityProfile,
+        distProfile,
+        vliProfile,
         isNationProfilePending,
+        isCityProfilePending,
+        isDistProfilePending,
+        isVliProfilePending,
         getProfile,
     }
 });

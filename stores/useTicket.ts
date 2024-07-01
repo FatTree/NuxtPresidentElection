@@ -13,7 +13,6 @@ export const useTicket = defineStore(storeName, () => {
         CCode,
         DCode,
         VCode,
-        NCode,
         OAColorTable
     } = storeToRefs(overall);
 

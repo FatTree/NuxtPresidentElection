@@ -18,76 +18,33 @@ const props = withDefaults(defineProps<Props>(), {
     isPending: false,
 });
 
-const overallStore = useOverall();
-const {
-    OA_area_code,
-    OA_city_code,
-    OA_dept_code,
-    OA_li_code,
-    OA_prv_code,
-} = storeToRefs(overallStore);
-
-const areaStore = useArea();
-const {
-    vliList,
-} = storeToRefs(areaStore);
-const {
-    getArea
-} = areaStore;
-
-const profileStore = useProfile();
-const {
-    getProfile
-} = profileStore;
-
-const ticketStore = useTicket();
-const {
-    getTicket
-} = ticketStore;
+// composables
+const { 
+    setSelectedCity,
+    setSelectedDist,
+    setSelectedVli,
+} = useSelectArea();
 
 const selectedArea: Ref<AreaModel> = ref({} as AreaModel);
 
 watch( selectedArea, async() => {
     const {...params} = selectedArea.value;
-    console.log('watch~~~~');
     
-    try {
-        switch (props.type) {
-            case TYPE.CITY:
-                // 0. set Codes
-                OA_prv_code.value = params.prv_code;
-                OA_city_code.value = params.city_code;
-                OA_area_code.value = params.area_code;
-                // 1. get DList
-                await getArea(TYPE.DISC);
-                // 2. clear VLi List | Selected
-                vliList.value = [];
-                // 3. get Profile/Ticket
-                await getProfile(TYPE.CITY);
-                await getTicket(TYPE.CITY);
-                break;
-                
-            case TYPE.DISC:
-                // 0. set Codes
-                OA_dept_code.value = params.dept_code;
-                // 1. get VliList
-                await getArea(TYPE.VLI);
-                // 2. get Profileget Profile/Ticket
-                await getProfile(TYPE.DISC);
-                await getTicket(TYPE.DISC);
-                break;
-            case TYPE.VLI:
-                // 0. set Codes
-                OA_li_code.value = params.li_code;
-                // 1. get Profile/Ticket
-                await getProfile(TYPE.VLI);
-                await getTicket(TYPE.VLI);
-                break;
-            default:
-                break;
-        }
-    } catch (error) {
-        console.log(error);
+    switch (props.type) {
+        case TYPE.CITY:
+            setSelectedCity(params.prv_code, params.city_code,params.area_code);
+            break;
+            
+        case TYPE.DISC:
+            setSelectedDist(params.dept_code);
+            break;
+
+        case TYPE.VLI:
+            setSelectedVli(params.li_code);
+            break;
+
+        default:
+            break;
     }
 });
 

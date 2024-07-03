@@ -10,6 +10,11 @@
  * - ${prv_code}_${city_code}_${area_code}_${dept_code}_${li_code}
 */
 
+export type responseModel = {
+    isError: boolean,
+    data: any,
+}
+
 // Code: ${prv_code}_${city_code}_${area_code}_${dept_code}_${li_code}
 export type CodeModel = {
     prv_code: string,

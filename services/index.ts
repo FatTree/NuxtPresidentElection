@@ -1,5 +1,5 @@
 import { useAsyncData } from "nuxt/app";
-import type { ElectionGroupModel, ElectionModel } from '~/models/data/ElectionModel';
+import type { responseModel, ElectionModel } from '~/models/data/ElectionModel';
 /**
  * https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/4d83db17c1707e3defae5dc4d4e9c800/D/10_014_00_000_0000.json
  * https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/1f7d9f4f6bfe06fdaf4db7df2ed4d60c/L/65_000_00_000_0000.json
@@ -20,11 +20,6 @@ const TICKET_URL = 'https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/0
 const AREA_URL = 'https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00';
 const PROFILE_URL = 'https://db.cec.gov.tw/static/elections/data/profiles/ELC/P0/00';
 const PARTY_COLOR = 'https://db.cec.gov.tw/static/webs/configs/party_colors.json';
-
-type responseModel = {
-    isError: boolean,
-    data: any,
-}
 
 type reqParam = {
     id: string,

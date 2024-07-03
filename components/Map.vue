@@ -10,26 +10,10 @@ const props = withDefaults(defineProps<Props>(), {
     id: '1f7d9f4f6bfe06fdaf4db7df2ed4d60c',
 });
 
+// composables
+const { setSelectedCity } = useSelectArea();
+
 // store
-const overallStore = useOverall();
-const {
-    OA_prv_code,
-    OA_city_code,
-    OA_area_code,
-} = storeToRefs(overallStore);
-
-const areaStore = useArea();
-const {
-    vliList,
-} = storeToRefs(areaStore);
-const { getArea } = areaStore;
-
-const profileStore = useProfile();
-const { getProfile } = profileStore;
-
-const ticketStore = useTicket();
-const { getTicket } = ticketStore;
-
 const mapStore = useMap();
 const {
     mapList,
@@ -39,23 +23,7 @@ const {
 } = mapStore;
 
 const clickMap = async(city: MapViewModel) => {
-    console.log(city);
-    // ticket
-    // 0. set Codes
-    OA_prv_code.value = city.prv_code;
-    OA_city_code.value = city.city_code;
-    OA_area_code.value = city.area_code;
-    try {
-        // 1. get DList
-        await getArea(TYPE.DISC);
-        // 2. clear VLi List | Selected
-        vliList.value = [];
-        // 3. get Profile/Ticket
-        await getProfile(TYPE.CITY);
-        await getTicket(TYPE.CITY);
-    } catch (error) {
-        console.log(error);
-    }
+    setSelectedCity(city.prv_code, city.city_code,city.area_code);
 }
 
 onMounted(async () => {

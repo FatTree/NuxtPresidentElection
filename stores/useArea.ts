@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
-import type { AreaModel } from '~/models/data/ElectionModel';
+import type { AreaModel, responseModel } from '~/models/data/ElectionModel';
 import { getAreaData } from '~/services'
 import { useOverall } from './useOverall';
 import { TYPE } from '~/assets/js/enum';
 
-
 const storeName = 'area';
 export const useArea = defineStore(storeName, () => {
+    // stores
     const overall = useOverall();
     const {
         OAId,
@@ -17,14 +17,16 @@ export const useArea = defineStore(storeName, () => {
         DCode,
     } = storeToRefs(overall);
 
+    // data
     const cityList: Ref<AreaModel[]> = ref([]);
     const distList: Ref<AreaModel[]> = ref([]);
     const vliList: Ref<AreaModel[]> = ref([]);
 
-    const isCityListPending: Ref<boolean> = ref(false);
-    const isDistListPending: Ref<boolean> = ref(false);
-    const isVliListPending: Ref<boolean> = ref(false);
+    const isCityListPending: Ref<boolean> = ref(true);
+    const isDistListPending: Ref<boolean> = ref(true);
+    const isVliListPending: Ref<boolean> = ref(true);
 
+    // methods
     const getArea = async(type:string) => {
         let res;
         try {
@@ -34,6 +36,8 @@ export const useArea = defineStore(storeName, () => {
                     res = await getAreaData({id: OAId.value, type, code: NCode.value});
                     cityList.value = res.data[OACode.value];
                     isCityListPending.value = false;
+                    isDistListPending.value = false;
+                    isVliListPending.value = false;
                     break;
                 case TYPE.DISC:
                     isDistListPending.value = true;

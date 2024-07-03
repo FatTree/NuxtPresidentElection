@@ -1,36 +1,30 @@
 <script lang="ts" setup>
 import { useTicket } from '#imports';
+import { TYPE } from '~/assets/js/enum';
 
 // store
 const ticketStore = useTicket();
 const {
-    cityTicketList,
-    distTicketList,
-    vliTicketList
+    isCurrentTicketPending,
+    currentTicketList,
 } = storeToRefs(ticketStore);
-const {
-    isCityTicketPending,
-    isDistTicketPending,
-    isVliTicketPending,
-} = ticketStore;
 
+const profileStore = useProfile();
+const {
+    isCurrentProfilePending,
+    currentProfile,
+} = storeToRefs(profileStore);
 
 </script>
 <template>
     <div class="TicketGroup">
         <h1>TicketGroup</h1>
+        <Profile 
+            :profile="currentProfile" 
+            :isPending="isCurrentProfilePending" />
         <Ticket
-            v-for="(city, i) in cityTicketList" :key="i"
-            :ticketList="city"
-            :isPending="isCityTicketPending" />
-        <Ticket
-            v-for="(dist, i) in distTicketList" :key="i"
-            :ticketList="dist"
-            :isPending="isDistTicketPending" />
-        <Ticket
-            v-for="(vli, i) in vliTicketList" :key="i"
-            :ticketList="vli"
-            :isPending="isVliTicketPending" />
+            :ticketList="currentTicketList"
+            :isPending="isCurrentTicketPending" />
     </div>
 </template>
 <style lang="scss" scoped>

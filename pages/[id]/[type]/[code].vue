@@ -54,7 +54,9 @@ onBeforeMount( async() => {
     // OACode.value = code;
     OAId.value = id;
     try {
-        await getArea('C');
+        await getArea(TYPE.CITY);
+        await getProfile(TYPE.CITY);
+        await getTicket(TYPE.CITY);
     } catch (error) {
         console.log(error)
     }
@@ -81,8 +83,8 @@ onBeforeMount( async() => {
             </template>
         </AreaGroup>
         <OverallGroup :id="id" :type="type" :code="code" />
-        <Map></Map>
-        <!-- <TicketGroup></TicketGroup> -->
+        <!-- <Map></Map> -->
+        <TicketGroup></TicketGroup>
     </div>
 </template>
 

@@ -54,11 +54,9 @@ onBeforeMount( async() => {
         </div>
         <div>
             <h2>Ranking</h2>
-            <div v-for="(item, index) in nationalTicketList" :key="index">
-                <Ticket 
-                    :ticketList="item"
-                    :isPending="isNationTicketPending" />
-            </div>
+            <Ticket 
+                :ticketList="nationalTicketList"
+                :isPending="isNationTicketPending" />
         </div>
     </div>
 </template>

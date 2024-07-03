@@ -20,40 +20,68 @@ const props = withDefaults(defineProps<Props>(), {
 
 const overallStore = useOverall();
 const {
-    CCode,
-    DCode,
+    OA_area_code,
+    OA_city_code,
+    OA_dept_code,
+    OA_li_code,
+    OA_prv_code,
 } = storeToRefs(overallStore);
 
 const areaStore = useArea();
 const {
-    distList,
     vliList,
 } = storeToRefs(areaStore);
 const {
     getArea
 } = areaStore;
 
-const selectedArea: Ref<AreaModel | undefined> = ref();
+const profileStore = useProfile();
+const {
+    getProfile
+} = profileStore;
+
+const ticketStore = useTicket();
+const {
+    getTicket
+} = ticketStore;
+
+const selectedArea: Ref<AreaModel> = ref({} as AreaModel);
 
 watch( selectedArea, async() => {
     const {...params} = selectedArea.value;
-    CCode.value = `${params.prv_code}_${params.city_code}_${params.area_code}_000_0000`;
-    DCode.value = `${params.prv_code}_${params.city_code}_${params.area_code}_${params.dept_code}_0000`;
+    console.log('watch~~~~');
+    
     try {
         switch (props.type) {
             case TYPE.CITY:
+                // 0. set Codes
+                OA_prv_code.value = params.prv_code;
+                OA_city_code.value = params.city_code;
+                OA_area_code.value = params.area_code;
                 // 1. get DList
                 await getArea(TYPE.DISC);
-                // 2. clear DIST Selected
-                // 3. clear VLi List | Selected
+                // 2. clear VLi List | Selected
                 vliList.value = [];
+                // 3. get Profile/Ticket
+                await getProfile(TYPE.CITY);
+                await getTicket(TYPE.CITY);
                 break;
+                
             case TYPE.DISC:
+                // 0. set Codes
+                OA_dept_code.value = params.dept_code;
                 // 1. get VliList
                 await getArea(TYPE.VLI);
-                // 2. clear DSelected
+                // 2. get Profileget Profile/Ticket
+                await getProfile(TYPE.DISC);
+                await getTicket(TYPE.DISC);
                 break;
             case TYPE.VLI:
+                // 0. set Codes
+                OA_li_code.value = params.li_code;
+                // 1. get Profile/Ticket
+                await getProfile(TYPE.VLI);
+                await getTicket(TYPE.VLI);
                 break;
             default:
                 break;
@@ -61,17 +89,21 @@ watch( selectedArea, async() => {
     } catch (error) {
         console.log(error);
     }
-})
+});
+
+
 </script>
 
 <template>
     <div class="Area">
         <h1>Area: {{ type }}</h1>
         <div v-show="isPending">loading...</div>
+        <!-- BUG: No default value neither PINIA -->
         <select v-model="selectedArea">
             <option 
                 v-for="(item, i) in list"
                 :key="i" 
+                :selected="i===0"
                 :value="item">
                 {{ item.area_name }}: {{ item.prv_code }}-{{  item.city_code }}-{{ item.area_code }}-{{ item.dept_code }}-{{ item.li_code }}
             </option>

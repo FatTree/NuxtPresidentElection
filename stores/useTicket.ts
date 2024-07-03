@@ -42,7 +42,7 @@ export const useTicket = defineStore(storeName, () => {
                 return acc;
             }, []);
         };
-
+        
         const combine = (cand: TicketModel, vice: TicketModel) => {
             const _obj = cand;
             const _party: PartyColorModel | undefined = OAColorTable.value.find( e => {
@@ -51,15 +51,15 @@ export const useTicket = defineStore(storeName, () => {
             return {...cand, vice_name: vice.cand_name, party_color: _party!.color_code}
         }
 
-        const compare = ( a: TicketGeneratedModel, b: TicketGeneratedModel ) => {
-            if ( a.ticket_num > b.ticket_num ){
-                return -1;
-            }
-            if ( a.ticket_num < b.ticket_num ){
-                return 1;
-            }
-            return 0;
-        }
+        // const compare = ( a: TicketGeneratedModel, b: TicketGeneratedModel ) => {
+        //     if ( a.ticket_num > b.ticket_num ){
+        //         return -1;
+        //     }
+        //     if ( a.ticket_num < b.ticket_num ){
+        //         return 1;
+        //     }
+        //     return 0;
+        // }
 
         const newArr: [] = groupBy(list, "cand_no");
         const ticketList: TicketGeneratedModel[] = [];

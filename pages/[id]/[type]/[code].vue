@@ -83,7 +83,7 @@ onBeforeMount( async() => {
             </template>
         </AreaGroup>
         <OverallGroup :id="id" :type="type" :code="code" />
-        <!-- <Map></Map> -->
+        <Map :id="id" />
         <TicketGroup></TicketGroup>
     </div>
 </template>

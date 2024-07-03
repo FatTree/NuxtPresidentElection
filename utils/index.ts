@@ -1,4 +1,5 @@
-import type { CodeModel } from '~/models/data/ElectionModel';
+import type { CodeModel, PartyColorModel, TicketGeneratedModel, TicketModel } from '~/models/data/ElectionModel';
+
 /**
  * Ticket:
  * https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00/4d83db17c1707e3defae5dc4d4e9c800/N/00_000_00_000_0000.json
@@ -17,4 +18,15 @@ export const generateCode = (model: CodeModel): string => {
     console.log("_CCode:", _CCode);
     
     return _CCode;
+}
+
+// ticket
+export const compare = ( a: TicketGeneratedModel, b: TicketGeneratedModel ) => {
+    if ( a.ticket_num > b.ticket_num ){
+        return -1;
+    }
+    if ( a.ticket_num < b.ticket_num ){
+        return 1;
+    }
+    return 0;
 }

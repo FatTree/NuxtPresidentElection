@@ -25,10 +25,6 @@ export const useArea = defineStore(storeName, () => {
     const isDistListPending: Ref<boolean> = ref(false);
     const isVliListPending: Ref<boolean> = ref(false);
 
-    const selectedCity = ref();
-    const selectedDist = ref();
-    const selectedVli = ref();
-
     const getArea = async(type:string) => {
         let res;
         try {

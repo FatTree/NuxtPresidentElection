@@ -12,7 +12,6 @@ export const useMap = defineStore(storeName, () => {
         OAColorTable
     } = storeToRefs(overallStore);
 
-    const victorTicketList: Ref<[]> = ref([]);
     const mapList: Ref<MapViewModel[]> = ref([]);
 
     type cityPathModel = {
@@ -206,40 +205,51 @@ export const useMap = defineStore(storeName, () => {
         }
     ];
 
+    type tempList = {
+        prv_code: string;
+        city_code: string;
+        area_code: string;
+        dept_code: string;
+        li_code: string;
+        area_name: string;
+        party_color: string,
+        name?: string[],
+        path?: string,
+    }
+
     const getMapTicketList = async() => {
         const res = await getTicketData({id: OAId.value, type: TYPE.CITY, code: OACode.value});
-        console.log('res.data[OACode.value]', res.data[OACode.value]);
+        const _result: TicketModel[] = res.data[OACode.value];
+        const _group: TicketModel[] = groupBy(_result, 'area_name');
+        const _keys: string[] = Object.keys(_group);
+        const _winnerList: TicketGeneratedModel[] = [];
         
-        victorTicketList.value = res.data[OACode.value].filter( (e: TicketModel) => (e.is_victor.trim() === '*' && e.is_vice.trim() === ''));
+        _keys.forEach( (_k: String) => {
+            const _new = _group[_k].filter( (e: TicketModel) => (e.is_vice.trim() === ''))
+            const _winner: TicketGeneratedModel = _new.sort((a: TicketGeneratedModel, b:TicketGeneratedModel) => {
+                return a.ticket_num - b.ticket_num})[_new.length-1];
+            _winnerList.push(_winner);
+        });
         
-        console.log('victorTicketList.value',victorTicketList.value);
-
-        const llll: {}[] = [];
-        victorTicketList.value.forEach( (e: TicketModel) => {
-            const _obj: PartyColorModel = OAColorTable.value.find(_pColor => (e.party_code.toString() === _pColor.party_code)) as PartyColorModel;
-            const a = {..._obj, ...e}
-            llll.push(a)
-        })
-
-
-
-        // party_code: string,
-        // party_name: string,
-        // color_code: string
+        const _combineList: tempList[] = [];
+        _winnerList.forEach( (e: TicketModel) => {
+            const _obj: PartyColorModel = OAColorTable.value.find((_pColor) => {
+                return e.party_code.toString() === _pColor.party_code 
+            }) as PartyColorModel;
+            const a = {party_color: _obj.color_code, area_name: e.area_name, prv_code: e.prv_code, city_code: e.city_code, area_code: e.area_code, dept_code: e.dept_code, li_code: e.li_code}
+            _combineList.push(a)
+        });
         
-        console.log('llll',llll);
-
-        victorTicketList.value.forEach( _victorTicketList => {
+        _combineList.forEach( _l => {
             cityPath.find((_cityPath: cityPathModel) => {
                 const name: string[] = _cityPath.name;
-                if (name.some( (cityName) => (cityName === _victorTicketList.area_name))) {
-                    const _com: MapViewModel = {name, path: _cityPath.path, ..._victorTicketList};
+                if (name.some( (cityName) => (cityName === _l.area_name))) {
+                    const _newPath = _cityPath.path.replace('<g id', `<g style="fill:#${_l.party_color}" id`)
+                    const _com: MapViewModel = {name, path: _newPath, ..._l};
                     mapList.value.push(_com);
                 }
             });
         });
-        console.log(mapList.value);
-        
     };
 
     return {

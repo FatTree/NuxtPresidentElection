@@ -30,3 +30,14 @@ export const compare = ( a: TicketGeneratedModel, b: TicketGeneratedModel ) => {
     }
     return 0;
 }
+
+export const groupBy = (input: TicketModel[], key: string): [] => {
+    return input.reduce((acc, currentValue) => {
+        let groupKey: string | number = currentValue[key as keyof TicketModel];
+        if (!acc[groupKey]) {
+            acc[groupKey] = [];
+        }
+        acc[groupKey].push(currentValue);
+        return acc;
+    }, []);
+};

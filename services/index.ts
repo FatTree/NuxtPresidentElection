@@ -1,4 +1,3 @@
-import { useAsyncData } from "nuxt/app";
 import type { responseModel, ElectionModel } from '~/models/data/ElectionModel';
 /**
  * https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/4d83db17c1707e3defae5dc4d4e9c800/D/10_014_00_000_0000.json

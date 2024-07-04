@@ -19,6 +19,10 @@
         "validNum": "有效票數",
         "inValidNum": "無效票數"
     },
+    "ticket": {
+        "ticketPercent": "得票率",
+        "ticket_num": "得票數"
+    },
     "areaLevel": {
         "city": "縣市",
         "dist": "區",

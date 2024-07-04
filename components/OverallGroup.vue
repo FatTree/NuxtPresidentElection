@@ -1,14 +1,11 @@
 <script lang="ts" setup>
-import { getTicketData } from '~/services';
 // props
 type Props = {
     id: string,
-    type: string,
     code: string
 }
 const props = withDefaults(defineProps<Props>(), {
     id: '',
-    type: '',
     code: ''
 });
 

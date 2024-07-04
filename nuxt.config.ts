@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   plugins: [
+    
   ],
   vite: {
     server: {

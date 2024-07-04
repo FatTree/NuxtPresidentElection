@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useArea } from '#imports';
-import { TYPE } from '~/assets/js/enum';
 import type { MapViewModel } from '~/models/view/ViewModel';
 type Props = {
     id: string;
@@ -29,7 +27,6 @@ const clickMap = async(city: MapViewModel) => {
 onMounted(async () => {
     await getMapTicketList();
 });
-
 </script>
 
 <template>

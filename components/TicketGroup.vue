@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { useTicket } from '#imports';
-import { TYPE } from '~/assets/js/enum';
 
 // store
 const ticketStore = useTicket();
 const {
-    isCurrentTicketPending,
-    currentTicketList,
+    isCityTicketPending,
+    isDistTicketPending,
+    isVliTicketPending,
+    cityTicketList,
+    distTicketList,
+    vliTicketList
 } = storeToRefs(ticketStore);
 
 const profileStore = useProfile();
@@ -23,8 +26,14 @@ const {
             :profile="currentProfile" 
             :isPending="isCurrentProfilePending" />
         <Ticket
-            :ticketList="currentTicketList"
-            :isPending="isCurrentTicketPending" />
+            :ticketList="cityTicketList"
+            :isPending="isCityTicketPending" />
+        <Ticket
+            :ticketList="distTicketList"
+            :isPending="isDistTicketPending" />
+        <Ticket
+            :ticketList="vliTicketList"
+            :isPending="isVliTicketPending" />
     </div>
 </template>
 <style lang="scss" scoped>

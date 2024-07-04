@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { TYPE } from '~/assets/js/enum';
+import { TYPE } from "~/assets/js/enum";
 import type { AreaModel } from '~/models/data/ElectionModel';
-import { useArea } from '~/stores/useArea'
 
 type Props = {
     id: string;
@@ -47,8 +46,6 @@ watch( selectedArea, async() => {
             break;
     }
 });
-
-
 </script>
 
 <template>

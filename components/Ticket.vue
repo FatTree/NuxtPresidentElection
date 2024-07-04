@@ -22,8 +22,8 @@ const props = withDefaults(defineProps<Props>(), {
         <label v-if="item.is_victor.trim() === '*'"> - Selected</label>
       </p>
       <p>{{ item.cand_name }} / {{ item.vice_name }}</p>
-      <p>得票率: {{ item.ticket_percent }} %</p>
-      <p>得票數: {{ item.ticket_num }} 票</p>
+      <p>{{ $t('ticket.ticketPercent') }}: {{ item.ticket_percent }} %</p>
+      <p>{{ $t('ticket.ticket_num') }}: {{ item.ticket_num }} {{ $t('UI.ticket') }}</p>
     </div>
   </div>
 </template>

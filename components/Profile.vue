@@ -9,10 +9,6 @@ const props = withDefaults(defineProps<Props>(), {
     profile: () => ({} as ProfileModel),
     isPending: true
 });
-
-onMounted( async() => {
-
-})
 </script>
 
 <template>
@@ -20,10 +16,10 @@ onMounted( async() => {
         <h1 v-show="isPending">Loading~~~</h1>
         <div v-show="profile.area_name">
             <h1>Profile: {{ profile.area_name }}</h1>
-            <p>投票率: {{profile.elected_to_cand}} %</p>
-            <p>投票數: {{profile.vote_ticket}} 票</p>
-            <p>有效票數: {{profile.valid_ticket}}  票</p>
-            <p>無效票數: {{profile.invalid_ticket}}  票</p>
+            <p>{{ $t('overall.voteRate') }}: {{profile.elected_to_cand}} %</p>
+            <p>{{ $t('overall.VoteNum') }}: {{profile.vote_ticket}} {{ $t('UI.ticket') }}</p>
+            <p>{{ $t('overall.validNum') }}: {{profile.valid_ticket}} {{ $t('UI.ticket') }}</p>
+            <p>{{ $t('overall.inValidNum') }}: {{profile.invalid_ticket}} {{ $t('UI.ticket') }}</p>
         </div>
     </div>
 </template>

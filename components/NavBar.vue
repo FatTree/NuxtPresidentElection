@@ -7,7 +7,7 @@ const list: Ref<ElectionModel[]> = ref([]);
 
 onMounted(async () => {
   try {
-    const { data, isError } = await getElectionsData();
+    const { data } = await getElectionsData();
     list.value = data[0].theme_items;
   } catch (error) {
     console.log(error)

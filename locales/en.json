@@ -14,10 +14,14 @@
     "overall": {
         "overall": "Overall",
         "national": "National",
-        "voteRate": "Vote Rate",
+        "voteRate": "Voter Turnout",
         "VoteNum": "Popular Vote",
         "validNum": "Valid Votes",
         "inValidNum": "Invalid Votes"
+    },
+    "ticket": {
+        "ticketPercent": "Percent",
+        "ticket_num": "Polls"
     },
     "areaLevel": {
         "city": "City",

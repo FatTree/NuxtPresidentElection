@@ -83,9 +83,9 @@ export type ElectionGroupModel = [{
  */
 export type ProfileModel = CodeModel & {
     tbox_no: string,
-    valid_ticket: number,
-    invalid_ticket: number,
-    vote_ticket: number,
+    valid_ticket: number | string,
+    invalid_ticket: number | string,
+    vote_ticket: number | string,
     votable_population: number,
     population: number,
     cand_num: number,
@@ -145,7 +145,7 @@ export type AreaGroupModel = {
 export type TicketModel = CodeModel & {
     tbox_no:string,
     cand_no: number,
-    ticket_num: number,
+    ticket_num: number | string,
     ticket_percent: number,
     is_victor:string,
     ris_prv_code:string,

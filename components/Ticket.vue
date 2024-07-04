@@ -10,14 +10,13 @@ const props = withDefaults(defineProps<Props>(), {
     isPending: true,
 });
 
-
 </script>
 
 <template>
   <div class="Ticket">
     <div v-show="isPending">~~~~~Loading~~~~~</div>
+    <h1>Ticket- {{ ticketList[0]?.area_name }}</h1>
     <div v-for="(item, i) in ticketList" :key="i">
-      <h1 v-if="i === 0">Ticket- {{ item.area_name }}</h1>
       <p :style="{ color: `#${item.party_color}`}">{{ item.cand_no }}. {{ item.party_name }}
         <label v-if="item.is_victor.trim() === '*'"> - Selected</label>
       </p>

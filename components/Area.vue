@@ -24,7 +24,16 @@ const {
     setSelectedVli,
 } = useSelectArea();
 
-const selectedArea: Ref<AreaModel> = ref({} as AreaModel);
+const selectedArea: Ref<AreaModel> = ref(props.list[0]);
+
+watch( 
+    () => props.list,
+    (list) => {
+        if(props.type === TYPE.CITY && list.length > 0) {
+            selectedArea.value = list[0];
+        }
+    }
+);
 
 watch( selectedArea, async() => {
     const {...params} = selectedArea.value;
@@ -57,7 +66,6 @@ watch( selectedArea, async() => {
             <option 
                 v-for="(item, i) in list"
                 :key="i" 
-                :selected="i===0"
                 :value="item">
                 {{ item.area_name }}: {{ item.prv_code }}-{{  item.city_code }}-{{ item.area_code }}-{{ item.dept_code }}-{{ item.li_code }}
             </option>

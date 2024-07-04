@@ -34,20 +34,27 @@ export const useProfile = defineStore(storeName, () => {
 
     const getProfile = async (type: string) => {
         let res;
+        const formatter = (_res: ProfileModel) => {
+            _res.invalid_ticket = (_res.invalid_ticket).toLocaleString('en');
+            _res.valid_ticket = (_res.valid_ticket).toLocaleString('en');
+            _res.vote_ticket = (_res.vote_ticket).toLocaleString('en');
+            return _res;
+        }
         try {
             switch (type) {
                 case TYPE.NATION:
                     isNationProfilePending.value = true;
                     res = await getProfileData({id: OAId.value, type, code: NCode.value});
-                    NationProfile.value = res.data[OACode.value][0];
+                    const _result: ProfileModel = res.data[OACode.value][0];
+                    NationProfile.value = formatter(_result);
                     isNationProfilePending.value = false;
                     break;
 
                 case TYPE.CITY:
                     isCityProfilePending.value = true;
                     res = await getProfileData({id: OAId.value, type, code: NCode.value});
-                    cityProfile.value = res.data[OACode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_000_0000` === CCode.value))[0];
-                    currentProfile.value = cityProfile.value;
+                    const _cityResult = res.data[OACode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_000_0000` === CCode.value))[0];
+                    currentProfile.value = formatter(_cityResult);
                     isCurrentProfilePending.value = false;
                     isCityProfilePending.value = false;
                     break;
@@ -55,8 +62,8 @@ export const useProfile = defineStore(storeName, () => {
                 case TYPE.DISC:
                     isDistProfilePending.value = true;
                     res = await getProfileData({id: OAId.value, type: TYPE.DISC, code: CCode.value});
-                    distProfile.value = res.data[CCode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_0000` === DCode.value))[0];
-                    currentProfile.value = distProfile.value;
+                    const _distResult = res.data[CCode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_0000` === DCode.value))[0];
+                    currentProfile.value = formatter(_distResult);
                     isCurrentProfilePending.value = false;
                     isDistProfilePending.value = false;
                     break;
@@ -64,8 +71,8 @@ export const useProfile = defineStore(storeName, () => {
                 case TYPE.VLI:
                     isVliProfilePending.value = true;
                     res = await getProfileData({id: OAId.value, type: TYPE.VLI, code: CCode.value});
-                    vliProfile.value = res.data[DCode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_${e.area_code}_${e.dept_code}_${e.li_code}` === VCode.value))[0];
-                    currentProfile.value = vliProfile.value;
+                    const _vliResult = res.data[DCode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_${e.area_code}_${e.dept_code}_${e.li_code}` === VCode.value))[0];
+                    currentProfile.value = formatter(_vliResult);
                     isCurrentProfilePending.value = false;
                     isVliProfilePending.value = false;
                     break;

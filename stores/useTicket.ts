@@ -16,7 +16,6 @@ export const useTicket = defineStore(storeName, () => {
         OAColorTable
     } = storeToRefs(overall);
 
-
     // data
     const isNationTicketPending: Ref<boolean> = ref(false);
     const isCityTicketPending: Ref<boolean> = ref(true);
@@ -43,15 +42,19 @@ export const useTicket = defineStore(storeName, () => {
             }, []);
         };
         
+        // combine president and vice
         const combine = (cand: TicketModel, vice: TicketModel) => {
-            const _obj = cand;
-            const _party: PartyColorModel | undefined = OAColorTable.value.find( e => {
-                return e.party_code === _obj.party_code.toString();
-            });
+            const _obj: TicketModel = cand;
+            const _party: PartyColorModel | undefined = 
+                OAColorTable.value.find( e => (e.party_code === _obj.party_code.toString()));
+            cand.ticket_num = (cand.ticket_num).toLocaleString('en');
             return {...cand, vice_name: vice.cand_name, party_color: _party!.color_code}
         }
         const newArr: [] = groupBy(list, "cand_no");
+        
         const ticketList: TicketGeneratedModel[] = [];
+        
+
         for( let i=1; i<newArr.length; i++) {
             let pre, vice;
             let temp: TicketModel = newArr[i][0]
@@ -64,6 +67,7 @@ export const useTicket = defineStore(storeName, () => {
             }
             ticketList.push(combine(pre, vice));
         }
+        
         return ticketList.sort( compare );
     }
 
@@ -126,3 +130,8 @@ export const useTicket = defineStore(storeName, () => {
         getTicket
     }
 });
+
+
+
+
+

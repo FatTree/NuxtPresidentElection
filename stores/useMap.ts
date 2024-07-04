@@ -216,7 +216,7 @@ export const useMap = defineStore(storeName, () => {
         name?: string[],
         path?: string,
     }
-
+    
     const getMapTicketList = async() => {
         const res = await getTicketData({id: OAId.value, type: TYPE.CITY, code: OACode.value});
         const _result: TicketModel[] = res.data[OACode.value];
@@ -224,22 +224,28 @@ export const useMap = defineStore(storeName, () => {
         const _keys: string[] = Object.keys(_group);
         const _winnerList: TicketGeneratedModel[] = [];
         
-        _keys.forEach( (_k: String) => {
-            const _new = _group[_k].filter( (e: TicketModel) => (e.is_vice.trim() === ''))
-            const _winner: TicketGeneratedModel = _new.sort((a: TicketGeneratedModel, b:TicketGeneratedModel) => {
-                return a.ticket_num - b.ticket_num})[_new.length-1];
+        const compare = (a: TicketGeneratedModel, b:TicketGeneratedModel) => {
+            return (a.ticket_num as number) - (b.ticket_num as number);
+        }
+
+        // get each city winner list
+        _keys.forEach( (_k ) => {
+            const _president = _group[_k].filter( (e: TicketModel) => (e.is_vice.trim() === ''));
+            const _winner: TicketGeneratedModel = _president.sort(compare)[_president.length-1];
             _winnerList.push(_winner);
         });
         
-        const _combineList: tempList[] = [];
-        _winnerList.forEach( (e: TicketModel) => {
+        // generate the list of the winner party color of each city...
+        const _combineList: tempList[] = _winnerList.map( (e: TicketModel) => {
             const _obj: PartyColorModel = OAColorTable.value.find((_pColor) => {
                 return e.party_code.toString() === _pColor.party_code 
             }) as PartyColorModel;
-            const a = {party_color: _obj.color_code, area_name: e.area_name, prv_code: e.prv_code, city_code: e.city_code, area_code: e.area_code, dept_code: e.dept_code, li_code: e.li_code}
-            _combineList.push(a)
+
+            const _e: tempList = {party_color: _obj.color_code,...e};
+            return {party_color: _obj.color_code,...e};
         });
-        
+
+        // combine 
         _combineList.forEach( _l => {
             cityPath.find((_cityPath: cityPathModel) => {
                 const name: string[] = _cityPath.name;

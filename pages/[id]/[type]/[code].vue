@@ -3,6 +3,9 @@ import { TYPE } from '~/assets/js/enum';
 import { useOverall } from '~/stores/useOverall';
 import { useTicket } from '~/stores/useTicket';
 
+
+
+
 // router
 const id: string = route.params.id as string;
 const type: string = route.params.type as string;

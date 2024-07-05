@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { TYPE } from "~/assets/js/enum";
 import type { AreaModel } from '~/models/data/ElectionModel';
+// import * as d3 from "d3"; // npm i --save-dev @types/d3, node version: 18
+import * as d3Core from "d3";
 
 type Props = {
     id: string;

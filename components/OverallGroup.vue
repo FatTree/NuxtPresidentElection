@@ -29,6 +29,19 @@ const {
     getTicket
 } = ticketStore;
 
+const allData = ref([
+    {
+        label: '投票率',
+        backgroundColor: '#41B883',
+        data: NationProfile.value.vote_to_elect,
+    },
+    {
+        label: '未投票率',
+        backgroundColor: '#E46651',
+        data: 100 - NationProfile.value.vote_to_elect,
+    }
+]);
+
 
 onBeforeMount( async() => {
     try {
@@ -47,7 +60,13 @@ onBeforeMount( async() => {
     <div class="OverallGroup">
         <h1>OverallGroup</h1>
         <div>
-            <Profile :profile="NationProfile" :isPending="isNationProfilePending" />
+            <Profile :profile="NationProfile" :isPending="isNationProfilePending">
+                <template #pie>
+                    <DonutPie
+                        :chartType="'doughnut'"
+                        :data="allData" />
+                </template>
+            </Profile>
         </div>
         <div>
             <h2>Ranking</h2>

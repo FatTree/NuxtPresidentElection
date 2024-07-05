@@ -29,20 +29,6 @@ const {
     getTicket
 } = ticketStore;
 
-const allData = ref([
-    {
-        label: '投票率',
-        backgroundColor: '#41B883',
-        data: NationProfile.value.vote_to_elect,
-    },
-    {
-        label: '未投票率',
-        backgroundColor: '#E46651',
-        data: 100 - NationProfile.value.vote_to_elect,
-    }
-]);
-
-
 onBeforeMount( async() => {
     try {
         // Profile:
@@ -61,11 +47,12 @@ onBeforeMount( async() => {
         <h1>OverallGroup</h1>
         <div>
             <Profile :profile="NationProfile" :isPending="isNationProfilePending">
-                <template #pie>
+                <!-- <template #pie>
                     <DonutPie
+                        v-if="!isNationProfilePending"
                         :chartType="'doughnut'"
                         :data="allData" />
-                </template>
+                </template> -->
             </Profile>
         </div>
         <div>

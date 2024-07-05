@@ -222,12 +222,12 @@ export const useMap = defineStore(storeName, () => {
         const _result: TicketModel[] = res.data[OACode.value];
         const _group: TicketModel[] = groupBy(_result, 'area_name');
         const _keys: string[] = Object.keys(_group);
-        const _winnerList: TicketGeneratedModel[] = [];
+        let _winnerList: TicketGeneratedModel[] = [];
         
         const compare = (a: TicketGeneratedModel, b:TicketGeneratedModel) => {
             return (a.ticket_num as number) - (b.ticket_num as number);
         }
-
+        
         // get each city winner list
         _keys.forEach( (_k ) => {
             const _president = _group[_k].filter( (e: TicketModel) => (e.is_vice.trim() === ''));

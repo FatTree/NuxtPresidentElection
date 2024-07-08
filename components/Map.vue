@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import debounce from 'lodash/debounce';
+
 import type { MapViewModel } from '~/models/view/ViewModel';
 type Props = {
     id: string;
@@ -24,12 +26,13 @@ const clickMap = async(city: MapViewModel) => {
     setSelectedCity(city.prv_code, city.city_code,city.area_code);
 }
 
+const clickMapDebounce = debounce(clickMap, 1000, { leading: true, trailing: true });
+
 onMounted(async () => {
     try {
         await getMapTicketList();
     } catch (error) {
         console.log(error);
-        
     }
 });
 </script>
@@ -42,7 +45,7 @@ onMounted(async () => {
                 v-for="(city, index) in mapList" 
                 :key="index" 
                 v-html="city.path" 
-                @click="clickMap(city)">
+                @click="clickMapDebounce(city)">
             </g>
         </svg>
     </div>

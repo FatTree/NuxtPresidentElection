@@ -81,7 +81,7 @@ export const useProfile = defineStore(storeName, () => {
                     break;
             }
         } catch (error) {
-            
+            console.log(error)
         }
     }
 

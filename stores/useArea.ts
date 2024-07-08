@@ -27,7 +27,7 @@ export const useArea = defineStore(storeName, () => {
     const isVliListPending: Ref<boolean> = ref(true);
 
     // methods
-    const getArea = async(type:string) => {
+    const getArea = async(type:TYPE) => {
         let res;
         try {
             switch (type) {

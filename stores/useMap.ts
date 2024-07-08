@@ -216,46 +216,55 @@ export const useMap = defineStore(storeName, () => {
         name?: string[],
         path?: string,
     }
+
+    const getTicketWinnerList = ($keys: string[], $group: TicketModel[]): TicketGeneratedModel[] => {
+        const _list: TicketGeneratedModel[] = [];
+        $keys.forEach( (_k ) => {
+            const _president = $group[_k].filter( (e: TicketModel) => (e.is_vice.trim() === ''));
+            const _winner: TicketGeneratedModel = _president.sort(compare)[0];
+            _list.push(_winner);
+        });
+        return _list;
+    }
+
+    const combineWinnerAndColorList = ($winnerList: TicketGeneratedModel[]): tempList[] => {
+        return $winnerList.map( (e: TicketModel) => {
+            const _obj: PartyColorModel = OAColorTable.value.find((_pColor) => {
+                return e.party_code.toString() === _pColor.party_code 
+            }) as PartyColorModel;
+            const _e: tempList = {party_color: _obj.color_code,...e};
+            return _e;
+        });
+    }
+
+    const combineWinnerColorAndMapList = ($combineList: tempList[]): MapViewModel[] => {
+        return $combineList.map( _l => {
+            let _obj: MapViewModel = {} as MapViewModel;
+            cityPath.find((_cityPath: cityPathModel) => {
+                const name: string[] = _cityPath.name;
+                if (name.some( (cityName) => (cityName === _l.area_name))) {
+                    const _newPath = _cityPath.path.replace('<g id', `<g style="fill:#${_l.party_color}" id`)
+                    _obj = {name, path: _newPath, ..._l};
+                }
+            });
+            return _obj;
+        });
+    }
     
     const getMapTicketList = async() => {
         const res = await getTicketData({id: OAId.value, type: TYPE.CITY, code: OACode.value});
         const _result: TicketModel[] = res.data[OACode.value];
         const _group: TicketModel[] = groupBy(_result, 'area_name');
         const _keys: string[] = Object.keys(_group);
-        let _winnerList: TicketGeneratedModel[] = [];
         
-        const compare = (a: TicketGeneratedModel, b:TicketGeneratedModel) => {
-            return (a.ticket_num as number) - (b.ticket_num as number);
-        }
-        
-        // get each city winner list
-        _keys.forEach( (_k ) => {
-            const _president = _group[_k].filter( (e: TicketModel) => (e.is_vice.trim() === ''));
-            const _winner: TicketGeneratedModel = _president.sort(compare)[_president.length-1];
-            _winnerList.push(_winner);
-        });
+        // get the list of the winner of each city
+        const _winnerList: TicketGeneratedModel[] = getTicketWinnerList(_keys, _group);
         
         // generate the list of the winner party color of each city...
-        const _combineList: tempList[] = _winnerList.map( (e: TicketModel) => {
-            const _obj: PartyColorModel = OAColorTable.value.find((_pColor) => {
-                return e.party_code.toString() === _pColor.party_code 
-            }) as PartyColorModel;
-
-            const _e: tempList = {party_color: _obj.color_code,...e};
-            return {party_color: _obj.color_code,...e};
-        });
-
-        // combine 
-        _combineList.forEach( _l => {
-            cityPath.find((_cityPath: cityPathModel) => {
-                const name: string[] = _cityPath.name;
-                if (name.some( (cityName) => (cityName === _l.area_name))) {
-                    const _newPath = _cityPath.path.replace('<g id', `<g style="fill:#${_l.party_color}" id`)
-                    const _com: MapViewModel = {name, path: _newPath, ..._l};
-                    mapList.value.push(_com);
-                }
-            });
-        });
+        const _combineList: tempList[] = combineWinnerAndColorList(_winnerList);
+        
+        // generate the mapList 
+        mapList.value = combineWinnerColorAndMapList(_combineList);
     };
 
     return {

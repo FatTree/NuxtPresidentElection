@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { TYPE } from "~/assets/js/enum";
 import type { AreaModel } from '~/models/data/ElectionModel';
-// import * as d3 from "d3"; // npm i --save-dev @types/d3, node version: 18
-import * as d3Core from "d3";
+import debounce from 'lodash/debounce';
 
 type Props = {
     id: string;
@@ -37,9 +36,18 @@ watch(
     }
 );
 
+const disabled: Ref<boolean> = ref(false);
+
+const cooldownArea = () => {
+    disabled.value = true;
+    setTimeout(function () {
+        disabled.value = false;
+    }, 1000);
+}
+// debounce(cooldownArea, 1000, { leading: true, trailing: true });
+
 watch( selectedArea, async() => {
     const {...params} = selectedArea.value;
-    
     switch (props.type) {
         case TYPE.CITY:
             setSelectedCity(params.prv_code, params.city_code,params.area_code);
@@ -64,7 +72,7 @@ watch( selectedArea, async() => {
         <h1>Area: {{ type }}</h1>
         <div v-show="isPending">loading...</div>
         <!-- BUG: No default value neither PINIA -->
-        <select v-model="selectedArea">
+        <select @change="cooldownArea" :disabled="disabled" v-model="selectedArea">
             <option 
                 v-for="(item, i) in list"
                 :key="i" 

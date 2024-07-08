@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ProfileModel, TicketGeneratedModel } from '~/models/data/ElectionModel';
 import { TYPE } from '~/assets/js/enum';
+import debounce from 'lodash/debounce';
 
 type Props = {
     id: string;
@@ -35,7 +36,6 @@ const {
 } = storeToRefs(ticketStore);
 
 const clear = () => {
-    console.log('clear');
     distList.value = [];
     vliList.value = [];
     currentProfile.value = {} as ProfileModel;
@@ -43,6 +43,9 @@ const clear = () => {
     distTicketList.value = [] as TicketGeneratedModel[];
     vliTicketList.value = [] as TicketGeneratedModel[];
 }
+
+const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
+
 </script>
 
 <template>
@@ -66,7 +69,7 @@ const clear = () => {
             :code="code" 
             :list="vliList" 
             :isPending="isVliListPending" />
-        <button @click="clear">clear</button>
+        <button @click="clearDebounce">clear</button>
     </div>
 </template>
 

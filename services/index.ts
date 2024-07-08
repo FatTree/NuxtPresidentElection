@@ -1,3 +1,4 @@
+import type { TYPE } from '~/assets/js/enum';
 import type { responseModel, ElectionModel } from '~/models/data/ElectionModel';
 /**
  * https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/4d83db17c1707e3defae5dc4d4e9c800/D/10_014_00_000_0000.json
@@ -18,11 +19,11 @@ const ELECTION_LIST_URL = 'https://db.cec.gov.tw/static/elections/list/ELC_P0.js
 const TICKET_URL = 'https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00';
 const AREA_URL = 'https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00';
 const PROFILE_URL = 'https://db.cec.gov.tw/static/elections/data/profiles/ELC/P0/00';
-const PARTY_COLOR = 'https://db.cec.gov.tw/static/elections/webs/configs/party_colors.json';
+const PARTY_COLOR = 'https://db.cec.gov.tw/static/webs/configs/party_colors.json';
 
 type reqParam = {
     id: string,
-    type: string,
+    type: TYPE,
     code: string
 }
 
@@ -36,6 +37,7 @@ const getData = async (url: string): Promise<responseModel> => {
         return result;
     }
 }
+
 
 export const getElectionsData = async(): Promise<responseModel> =>  {
     const result: Promise<responseModel> = getData(ELECTION_LIST_URL);

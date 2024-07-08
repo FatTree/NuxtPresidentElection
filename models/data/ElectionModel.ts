@@ -11,7 +11,6 @@
 */
 
 export type responseModel = {
-    isError: boolean,
     data: any,
 }
 

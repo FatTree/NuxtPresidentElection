@@ -25,7 +25,12 @@ const clickMap = async(city: MapViewModel) => {
 }
 
 onMounted(async () => {
-    await getMapTicketList();
+    try {
+        await getMapTicketList();
+    } catch (error) {
+        console.log(error);
+        
+    }
 });
 </script>
 

@@ -18,7 +18,7 @@ const ELECTION_LIST_URL = 'https://db.cec.gov.tw/static/elections/list/ELC_P0.js
 const TICKET_URL = 'https://db.cec.gov.tw/static/elections/data/tickets/ELC/P0/00';
 const AREA_URL = 'https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00';
 const PROFILE_URL = 'https://db.cec.gov.tw/static/elections/data/profiles/ELC/P0/00';
-const PARTY_COLOR = 'https://db.cec.gov.tw/static/webs/configs/party_colors.json';
+const PARTY_COLOR = 'https://db.cec.gov.tw/static/elections/webs/configs/party_colors.json';
 
 type reqParam = {
     id: string,
@@ -27,13 +27,10 @@ type reqParam = {
 }
 
 const getData = async (url: string): Promise<responseModel> => {
-    let isError = false;
-    const result: responseModel = {isError, data: null};
-    
+    const result: responseModel = {data: null};
     try {
         result.data = await $fetch(url);
     } catch (error) {
-        isError = true;
         result.data = error;
     } finally {
         return result;
@@ -47,6 +44,8 @@ export const getElectionsData = async(): Promise<responseModel> =>  {
 
 export const getColorData = async(): Promise<responseModel> =>  {
     const result: Promise<responseModel> = getData(PARTY_COLOR);
+    console.log(result);
+    
     return result;
 }
 

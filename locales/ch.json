@@ -1,3 +1,38 @@
 {
-    
+    "language": "語言",
+    "UI": {
+        "name": "台灣總統選舉開票地圖",
+        "session": "第{session}總統副總統選舉",
+        "btnClear": "清除",
+        "ticket": "票"
+    },
+    "hint": {
+        "hint": "小提示",
+        "hint1": "點擊縣市、區、里可查看選舉結果",
+        "hint2": "點擊地圖可查看縣市的選舉結果"
+    },
+    "overall": {
+        "overall": "投票概況",  
+        "national": "全國",
+        "voteRate": "投票率",
+        "VoteNum": "投票數",
+        "validNum": "有效票數",
+        "inValidNum": "無效票數"
+    },
+    "ticket": {
+        "ticketPercent": "得票率",
+        "ticket_num": "得票數"
+    },
+    "areaLevel": {
+        "city": "縣市",
+        "dist": "區",
+        "li": "里"
+    },
+    "partyCode": {
+        "1": "中國國民黨",
+        "16": "民進黨",
+        "90": "親民黨",
+        "98": "連署",
+        "350": "台灣民眾黨"
+    }
 }

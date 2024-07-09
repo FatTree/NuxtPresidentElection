@@ -1,3 +1,38 @@
 {
-    
+    "language": "Language",
+    "UI": {
+        "name": "Taiwan Presidential Election",
+        "session": "{session}th Presidential Election",
+        "btnClear": "Clear",
+        "ticket": "-"
+    },
+    "hint": {
+        "hint": "Hint",
+        "hint1": "Select the county, city, district, or district from the drop-down menu to view the election results.",
+        "hint2": "Click on the map to see county and city election results"
+    },
+    "overall": {
+        "overall": "Overall",
+        "national": "National",
+        "voteRate": "Voter Turnout",
+        "VoteNum": "Popular Vote",
+        "validNum": "Valid Votes",
+        "inValidNum": "Invalid Votes"
+    },
+    "ticket": {
+        "ticketPercent": "Percent",
+        "ticket_num": "Polls"
+    },
+    "areaLevel": {
+        "city": "City",
+        "dist": "Dist.",
+        "li": "vli."
+    },
+    "partyCode": {
+        "1": "KMT",
+        "16": "DPP",
+        "90": "PFP",
+        "98": "Co-sign",
+        "350": "TPP"
+    }
 }

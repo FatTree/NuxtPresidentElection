@@ -168,9 +168,10 @@ export type TicketGeneratedModel = TicketModel & {
     party_color: string,
 }
 
-export type TicketGroupModel = {
-    [key: string]: TicketModel[];
+export type TicketGroupModel = { 
+    [key: string]: TicketModel[] 
 }
+
 
 export type PartyColorModel = {
     party_code: string,

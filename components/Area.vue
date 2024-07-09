@@ -48,6 +48,8 @@ const cooldownArea = () => {
 
 watch( selectedArea, async() => {
     const {...params} = selectedArea.value;
+    console.log(selectedArea.value);
+    
     switch (props.type) {
         case TYPE.CITY:
             setSelectedCity(params.prv_code, params.city_code,params.area_code);

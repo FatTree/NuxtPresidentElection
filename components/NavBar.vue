@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import type { ElectionModel } from '~/models/data/ElectionModel';
-import { getElectionsData } from '~/services'
+import { useElectionStore } from '#imports';
 
 const isPending: Ref<boolean> = ref(true);
 const list: Ref<ElectionModel[]> = ref([]);
 
+const electionStore = useElectionStore();
+const { electionList } = storeToRefs(electionStore);
+const { getElectionList } = electionStore;
+
 onMounted(async () => {
   try {
-    const { data } = await getElectionsData();
-    list.value = data[0].theme_items;
+    await getElectionList();
+    list.value = electionList.value;
   } catch (error) {
     console.log(error)
   } finally {

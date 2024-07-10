@@ -47,7 +47,7 @@ export const useTicket = defineStore(storeName, () => {
             const _obj: TicketModel = cand;
             const _party: PartyColorModel | undefined = 
                 OAColorTable.value.find( e => (e.party_code === _obj.party_code.toString()));
-            cand.ticket_num = (cand.ticket_num).toLocaleString('en');
+            // cand.ticket_num = (cand.ticket_num).toLocaleString('en');
             return {...cand, vice_name: vice.cand_name, party_color: _party!.color_code}
         }
         const newArr: [] = groupBy(list, "cand_no");
@@ -67,7 +67,6 @@ export const useTicket = defineStore(storeName, () => {
             }
             ticketList.push(combine(pre, vice));
         }
-        
         return ticketList.sort( compare );
     }
 

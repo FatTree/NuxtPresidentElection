@@ -1,20 +1,26 @@
 import { defineStore } from 'pinia';
-import { getElectionsList } from '~/services'
+import { getElectionsData } from '~/services'
 import { ref } from 'vue';
+import type { ElectionModel } from '~/models/data/ElectionModel';
 
 const storeName = 'electionList';
 export const useElectionStore = defineStore(storeName, () => {
-    const electionList = ref();
+    const electionList: Ref<ElectionModel[]> = ref([]);
     const isPending: Ref<Boolean> = ref(false);
 
-    const getElectionStore = async () => {
-        const data = await getElectionsList();
+    const getElectionList = async () => {
+        try {
+            const {data} = await getElectionsData();
+            electionList.value = data[0].theme_items;
+        } catch (error) {
+            console.error(error)
+        }
         
     }
 
     
     return {
         electionList,
-        getElectionStore,
+        getElectionList,
     }
 });

@@ -14,9 +14,9 @@
 <template>
     <div>
         <div>  
-            <h1>Error!{{ error.statusCode }}</h1>
+            <h1>404</h1>
             <div>
-                <div>{{ error.statusMessage }} 😮</div>
+                <div>Oh NO!!Page Not Found 😮</div>
                 <NuxtLink to="/" >Back to the INDEX</NuxtLink>
             </div>
         </div>

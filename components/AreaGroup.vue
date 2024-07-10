@@ -2,6 +2,7 @@
 import type { ProfileModel, TicketGeneratedModel } from '~/models/data/ElectionModel';
 import { TYPE } from '~/assets/js/enum';
 import debounce from 'lodash/debounce';
+import { useClear } from '#imports';
 
 type Props = {
     id: string;
@@ -23,26 +24,7 @@ const {
     isVliListPending,
 } = storeToRefs(areaStore);
 
-const profileStore = useProfile();
-const {
-    currentProfile
-} = storeToRefs(profileStore);
-
-const ticketStore = useTicket();
-const {
-    cityTicketList,
-    distTicketList,
-    vliTicketList
-} = storeToRefs(ticketStore);
-
-const clear = () => {
-    distList.value = [];
-    vliList.value = [];
-    currentProfile.value = {} as ProfileModel;
-    cityTicketList.value = [] as TicketGeneratedModel[];
-    distTicketList.value = [] as TicketGeneratedModel[];
-    vliTicketList.value = [] as TicketGeneratedModel[];
-}
+const { clear } = useClear();
 
 const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
 

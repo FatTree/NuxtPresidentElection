@@ -47,12 +47,6 @@ onBeforeMount( async() => {
         <h1>OverallGroup</h1>
         <div>
             <Profile :profile="NationProfile" :isPending="isNationProfilePending">
-                <!-- <template #pie>
-                    <DonutPie
-                        v-if="!isNationProfilePending"
-                        :chartType="'doughnut'"
-                        :data="allData" />
-                </template> -->
             </Profile>
         </div>
         <div>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getColorData } from '~/services';
 
 // store
 const OAStore = useOverall();

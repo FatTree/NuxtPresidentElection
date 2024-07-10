@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
       </p>
       <p>{{ item.cand_name }} / {{ item.vice_name }}</p>
       <p>{{ $t('ticket.ticketPercent') }}: {{ item.ticket_percent }} %</p>
-      <p>{{ $t('ticket.ticket_num') }}: {{ item.ticket_num }} {{ $t('UI.ticket') }}</p>
+      <p>{{ $t('ticket.ticket_num') }}: {{ item.ticket_num.toLocaleString('en') }} {{ $t('UI.ticket') }}</p>
     </div>
   </div>
 </template>

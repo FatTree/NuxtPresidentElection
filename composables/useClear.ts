@@ -25,7 +25,6 @@ export const useClear = () => {
 
 
     const clear = async () => {
-        console.log('clear');
         distList.value = [];
         vliList.value = [];
         currentProfile.value = {} as ProfileModel;

@@ -8,6 +8,8 @@ const list: Ref<ElectionModel[]> = ref([]);
 const electionStore = useElectionStore();
 const { electionList } = storeToRefs(electionStore);
 const { getElectionList } = electionStore;
+const router = useRouter();
+const route=useRoute();
 
 onMounted(async () => {
   try {
@@ -18,7 +20,20 @@ onMounted(async () => {
   } finally {
     isPending.value = false;
   }
+
+  const path = computed(() =>route.path);
+  if (path.value === '/' && list.value.length !== 0) {
+    router.push({ 
+      name: 'id-type-code', 
+      params: {
+        id: list.value[0].theme_id,
+        type: list.value[0].data_level,
+        code: `${list.value[0].prv_code}_${list.value[0].city_code}_${list.value[0].area_code}_${list.value[0].dept_code}_${list.value[0].li_code}` 
+      } 
+    })
+  }
 });
+
 
 </script>
 

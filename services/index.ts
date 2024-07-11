@@ -35,6 +35,7 @@ const getData = async (url: string) => {
     } catch (error) {
         if (error.response && error.response.status === 404) {
             throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
+            // navigateTo('/404', { redirectCode: 404 })
         }
         // 處理其他類型的錯誤
         throw createError({

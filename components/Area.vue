@@ -70,7 +70,6 @@ watch( selectedArea, async() => {
 
 <template>
     <div class="Area">
-        <h1>Area: {{ type }}</h1>
         <div v-show="isPending">loading...</div>
         <!-- BUG: No default value neither PINIA -->
         <select @change="cooldownArea" :disabled="disabled" v-model="selectedArea">

@@ -1,6 +1,7 @@
 import type { TYPE } from '~/assets/js/enum';
 import type { responseModel, ElectionModel } from '~/models/data/ElectionModel';
 import { createError } from 'nuxt/app';
+import { FetchError } from "ofetch"
 /**
  * https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/4d83db17c1707e3defae5dc4d4e9c800/D/10_014_00_000_0000.json
  * https://db.cec.gov.tw/static/elections/data/areas/ELC/P0/00/1f7d9f4f6bfe06fdaf4db7df2ed4d60c/L/65_000_00_000_0000.json
@@ -33,14 +34,15 @@ const getData = async (url: string) => {
         const response = await $fetch(url, { responseType: 'json' });
         return { data: response };
     } catch (error) {
-        if (error.response && error.response.status === 404) {
+        const FetchError = error as FetchError;
+        if (FetchError.response && FetchError.response.status === 404) {
             throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
             // navigateTo('/404', { redirectCode: 404 })
         }
         // 處理其他類型的錯誤
         throw createError({
-            statusCode: error.response?.status || 500,
-            statusMessage: error.message || '發生未知錯誤',
+            statusCode: FetchError.response?.status || 500,
+            statusMessage: FetchError.message || '發生未知錯誤',
             fatal: true
         });
     }

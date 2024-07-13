@@ -3,3 +3,16 @@
 h1 {
     font-size: 20px;
 }
+
+@mixin pad {
+    @media(max-width: 1100px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media(max-width:768px){
+        width: 100%;
+        @content;
+    }
+}

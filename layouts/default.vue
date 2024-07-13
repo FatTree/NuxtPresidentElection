@@ -19,12 +19,13 @@ onBeforeMount(async () => {
 
 <template>
   <div class="layout">
-    <h1>{{ $t("UI.name") }}</h1>
-    <h2>{{ $t("UI.session") }}</h2>
-    <select class="layout__nav__select" v-model="$i18n.locale">
-        <option value="en">🇺🇸</option>
-        <option value="ch">🇹🇼</option>
-    </select>
+    <div class="layout__header">
+      <h1>{{ $t("UI.name") }}</h1>
+      <select class="layout__nav__select" v-model="$i18n.locale">
+          <option value="en">🇺🇸</option>
+          <option value="ch">🇹🇼</option>
+      </select>
+    </div>
     <NavBar />
     <slot></slot>
   </div>
@@ -32,9 +33,17 @@ onBeforeMount(async () => {
 
 <style lang="scss">
 .layout {
-  border: 1px solid #aaa;
-}
-p {
-  border: 0;
+  &__header {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    padding: 10px;
+    background-color: var(--color-primary);
+    /* color: white; */
+
+    h1 {
+      margin: 0;
+    }
+  }
 }
 </style>

@@ -32,7 +32,6 @@ const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
 
 <template>
     <div class="AreaGroup">
-        <h1>Area Group</h1>
         <Area 
             :id="id" 
             :type="TYPE.CITY" 
@@ -57,6 +56,7 @@ const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
 
 <style scoped lang="scss">
     .AreaGroup {
-        border: 1px solid blueviolet
+        border: 1px solid blueviolet;
+        display: flex;
     }
 </style>

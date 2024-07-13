@@ -52,6 +52,7 @@ onMounted(async () => {
 </template>
 <style scoped lang="scss">
     .map {
+        width: 40%;
         border: 1px solid blueviolet
     }
 </style>

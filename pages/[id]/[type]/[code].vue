@@ -57,19 +57,27 @@ onBeforeMount( async() => {
 });
 </script>
 <template>
-    <div>
-        <p>id: {{ id }}</p>
-        <p>type: {{ type }}</p>
-        <p>code: {{ code }}</p>
-    </div>
-    <div>
-        <AreaGroup :id="id" :type="type" :code="code" />
-        <OverallGroup :id="id" :code="code" />
-        <Map :id="id" />
-        <TicketGroup />
+    <div class="page">
+        <div class="page__area">
+            <AreaGroup :id="id" :type="type" :code="code" />
+        </div>
+        <div class="page__content">
+            <OverallGroup :id="id" :code="code" />
+            <Map :id="id" />
+            <TicketGroup />
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
-    
+    .page {
+        &__area {
+            flex-grow: 1;
+            padding: 16px;
+        }
+        &__content {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 </style>

@@ -73,11 +73,15 @@ onBeforeMount( async() => {
     .page {
         &__area {
             flex-grow: 1;
-            padding: 16px;
         }
         &__content {
+            margin-top: 2rem;
             display: flex;
             justify-content: space-between;
+
+            @include pad {
+                display: block;
+            }
         }
     }
 </style>

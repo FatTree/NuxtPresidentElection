@@ -10,8 +10,6 @@ import {
     Filler,
     Title,
     Tooltip,
-    Legend,
-    type ChartData 
 } from 'chart.js'
 export default defineNuxtPlugin(() => {
     ChartJs.register(
@@ -25,6 +23,5 @@ export default defineNuxtPlugin(() => {
         Filler,
         Title,
         Tooltip,
-        Legend,
     )
 })

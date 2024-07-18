@@ -1,0 +1,79 @@
+@mixin text-blod {
+    font-weight: 600;
+    @include mobile { 
+        font-weight: 700;
+    }
+}
+
+@mixin title-l {
+    font-size: 20px;
+    @include text-blod;
+
+    @include mobile {
+        font-size: 18px;
+    }
+}
+
+@mixin title-m {
+    font-size: 18px;
+    @include text-blod;
+
+    @include mobile {
+        font-size: 14px;
+    }
+}
+
+@mixin text {
+    font-weight: 400;
+    line-height: 120%;
+
+    @include mobile {
+        line-height: 140%;
+    }
+}
+
+@mixin text-l {
+    font-size: 20px;
+    @include text;
+    @include mobile {
+        font-size: 16px;
+    }
+}
+
+@mixin text-m {
+    font-size: 16px;
+    @include text;
+    @include mobile {
+        font-size: 12px;
+    }
+}
+
+@mixin text-s {
+    font-size: 12px;
+    @include text;
+}
+
+
+
+@mixin button {
+    padding: 4px 12px;
+    border-radius: 8px;
+    background-color: $blue-button-normal;
+    color: $white;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 120%;
+
+    &:hover {
+        background-color: $blue-button-hover;
+    }
+
+    &:active {
+        background-color: $blue-button-click;
+    }
+
+    &:disabled {
+        background-color: $blue-button-disabled;
+        color: $white-darker;
+    }
+}

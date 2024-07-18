@@ -13,7 +13,9 @@ const props = withDefaults(defineProps<Props>(), {
 const profileStore = useProfile();
 const {
     NationProfile,
+    currentProfile,
     isNationProfilePending,
+    isCurrentProfilePending,
 } = storeToRefs(profileStore);
 const { 
     getProfile 
@@ -23,11 +25,18 @@ const ticketStore = useTicket();
 const {
     nationalTicketList,
     isNationTicketPending,
+    currentTicketList,
+    isCurrentTicketPending,
 
 } = storeToRefs(ticketStore);
 const {
     getTicket
 } = ticketStore;
+
+const areaStore = useArea();
+const {
+    selectedArea
+} = storeToRefs(areaStore);
 
 onBeforeMount( async() => {
     try {
@@ -44,22 +53,48 @@ onBeforeMount( async() => {
 </script>
 <template lang="">
     <div class="OverallGroup">
-        <h1>OverallGroup</h1>
-        <div>
-            <Profile :profile="NationProfile" :isPending="isNationProfilePending">
-            </Profile>
-        </div>
-        <div>
-            <h2>Ranking</h2>
+        <h1 class="OverallGroup__title">{{ $t('overall.overall') }}</h1>
+        <h1 class="OverallGroup__title">{{ selectedArea }}</h1>
+        <div class="OverallGroup__content">
+            <Profile :profile="currentProfile" :isPending="isCurrentProfilePending" />
             <Ticket 
-                :ticketList="nationalTicketList"
-                :isPending="isNationTicketPending" />
+                :isOverall="true" 
+                :ticketList="currentTicketList"
+                :isPending="isCurrentTicketPending" />
         </div>
     </div>
 </template>
 <style scoped lang="scss">
     .OverallGroup {
-        border: 1px solid blueviolet
+        /* margin-top: 2rem; */
+        background: $white;
+        padding: 20px;
+        border-radius: 1rem;
+        width: 280px;
+        height: 100%;
+
+        @include pad {
+            width: calc(100% - 40px)
+        }
+        @include mobile {
+            width: calc(100% - 40px)
+        }
+
+        &__title {
+            @include title-l;
+            margin-bottom: 1rem;
+        }
+
+        &__content { 
+            @include pad {
+                display: flex;
+                justify-content: space-evenly;
+            }
+
+            @include mobile {
+                display: block;
+            }
+        }
     }
     
 </style>

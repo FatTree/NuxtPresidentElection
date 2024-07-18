@@ -1,6 +1,7 @@
 import { TYPE } from "~/assets/js/enum";
 import type { ProfileModel, TicketGeneratedModel } from "~/models/data/ElectionModel";
 import { createError } from 'nuxt/app';
+import { FetchError } from "ofetch";
 
 export const useClear = () => {
     // stores
@@ -13,11 +14,14 @@ export const useClear = () => {
 
     const profileStore = useProfile();
     const {
-        currentProfile
+        currentProfile,
+        NationProfile
     } = storeToRefs(profileStore);
 
     const ticketStore = useTicket();
     const {
+        nationalTicketList,
+        currentTicketList,
         cityTicketList,
         distTicketList,
         vliTicketList
@@ -27,19 +31,21 @@ export const useClear = () => {
     const clear = async () => {
         distList.value = [];
         vliList.value = [];
-        currentProfile.value = {} as ProfileModel;
+        currentProfile.value = NationProfile.value;
+        currentTicketList.value = nationalTicketList.value;
         cityTicketList.value = [] as TicketGeneratedModel[];
         distTicketList.value = [] as TicketGeneratedModel[];
         vliTicketList.value = [] as TicketGeneratedModel[];
-        try {
-            await getArea(TYPE.CITY);
-        } catch (error) {
-            throw createError({
-                statusCode: error.response?.status || 500,
-                statusMessage: error.message || '發生未知錯誤',
-                fatal: true
-            });
-        }
+        // try {
+        //     await getArea(TYPE.CITY);
+        // } catch (error) {
+        //     const FetchError = error as FetchError;
+        //     throw createError({
+        //         statusCode: FetchError.response?.status || 500,
+        //         statusMessage: FetchError.message || '發生未知錯誤',
+        //         fatal: true
+        //     });
+        // }
     }
     return {
         clear,

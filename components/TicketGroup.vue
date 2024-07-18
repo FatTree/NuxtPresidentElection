@@ -21,23 +21,26 @@ const {
 </script>
 <template>
     <div class="TicketGroup">
-        <h1>TicketGroup</h1>
-        <Profile 
-            :profile="currentProfile" 
-            :isPending="isCurrentProfilePending" />
         <Ticket
+            v-if="cityTicketList"
             :ticketList="cityTicketList"
             :isPending="isCityTicketPending" />
         <Ticket
+            v-if="distTicketList"
             :ticketList="distTicketList"
             :isPending="isDistTicketPending" />
         <Ticket
+            v-if="vliTicketList"
             :ticketList="vliTicketList"
             :isPending="isVliTicketPending" />
     </div>
 </template>
 <style lang="scss" scoped>
     .TicketGroup {
-        border: 1px solid blueviolet
+        /* border: 1px solid blueviolet */
+        @include pad {
+            display: flex;
+            overflow-y: scroll;
+        }
     }
 </style>

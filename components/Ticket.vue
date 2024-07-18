@@ -4,10 +4,27 @@ import type { TicketGeneratedModel } from '~/models/data/ElectionModel';
 type Props = {
   ticketList: TicketGeneratedModel[],
   isPending: boolean,
+  isOverall?: boolean,
 }
 const props = withDefaults(defineProps<Props>(), {
     ticketList: () => ([]),
     isPending: true,
+    isOverall: false,
+});
+
+const areaName = ref('');
+const color = ref('#EEE');
+const bgColor = ref('#EEEEEE80');
+const handleColor = () => {
+  color.value = `#${props.ticketList[0].party_color}`;
+  bgColor.value = `#${props.ticketList[0].party_color}30`;
+}
+
+watch( () => props.ticketList, (list) => {
+  if(list.length > 0) {
+    handleColor();
+    areaName.value = list[0].area_name;
+  } 
 });
 
 const label = ref(props.ticketList.map(e => {
@@ -16,7 +33,7 @@ const label = ref(props.ticketList.map(e => {
     backgroundColor: '#' + e.party_color,
     data: e.ticket_percent,
   }
-}))
+}));
 
 const allData = computed(() => {
     return props.ticketList.map(e => {
@@ -31,28 +48,135 @@ const allData = computed(() => {
 </script>
 
 <template>
-  <div class="Ticket">
+  <div v-show="ticketList.length!==0" class="Ticket" :class="isOverall? '' : 'ticketBox'">
     <div v-show="isPending">~~~~~Loading~~~~~</div>
-    <h1>Ticket- {{ ticketList[0]?.area_name }}</h1>
-    <div>
-      <DonutPie
-          v-if="!isPending"
-          :chartType="'doughnut'"
-          :data="allData" />
-    </div>
-    <div v-for="(item, i) in ticketList" :key="i">
-      <p :style="{ color: `#${item.party_color}`}">{{ item.cand_no }}. {{ item.party_name }}
-        <label v-if="item.is_victor.trim() === '*'"> - Selected</label>
-      </p>
-      <p>{{ item.cand_name }} / {{ item.vice_name }}</p>
-      <p>{{ $t('ticket.ticketPercent') }}: {{ item.ticket_percent }} %</p>
-      <p>{{ $t('ticket.ticket_num') }}: {{ item.ticket_num.toLocaleString('en') }} {{ $t('UI.ticket') }}</p>
+    <DonutPie
+        v-if="isOverall"
+        :chartType="'doughnut'"
+        :data="allData" />
+    <div class="Ticket__bottom">
+      <p class="title" v-if="!isOverall">{{ areaName }}</p>
+      <div class="candGroup" v-for="(item, i) in ticketList" :key="i">
+        <div class="number">
+          <div class="number__round" :style="{ backgroundColor: `#${item.party_color}`}">{{ item.cand_no }}</div>
+        </div>
+        <div class="name">
+          <p class="name__partyName">{{ item.party_name }}</p>
+          <p class="name__cand">{{ item.cand_name }} | {{ item.vice_name }}</p>
+        </div>
+        <div class="vote" :style="{ borderLeft: `2px solid #${item.party_color}` }">
+          <p class="vote__percent">{{ item.ticket_percent }} %</p>
+          <p class="vote__num">{{ item.ticket_num.toLocaleString('en') }} {{ $t('UI.ticket') }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-  .Ticket {
-        border: 1px solid blueviolet
+.Ticket {
+  width: 280px;
+  margin-top: 3em;
+
+  &.ticketBox {
+    border: 3px solid v-bind(color);;
+    width: calc(100% - 2rem);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top: 0;
+    background-color: v-bind(bgColor);
+    &:not(:first-child) {
+      margin-top: 1em;
     }
+
+    @include pad {
+      width: 280px;
+      min-width: 280px;
+      &:not(:first-child) {
+        margin-top: 0;
+        margin-left: 1em;
+      }
+    }
+
+    > .Ticket__bottom {
+      margin-top: 0;
+
+      > .title {
+        @include title-l;
+        margin-bottom: 1em;
+      }
+    }
+  }
+
+  @include pad {
+    margin-top: 0;
+  }
+
+  @include mobile {
+    margin-top: 3em;
+    display: flex;
+  }
+
+  &__bottom {
+    margin-top: 2em;
+
+    @include mobile {
+      margin-top: 0;
+      margin-left: 1em;
+    }
+    
+    > .candGroup {
+      display: flex;
+
+      &:not(:last-child) {
+        margin-bottom: 1em;
+        @include mobile {
+          margin-bottom: .5em;
+        }
+      }
+
+      > .number {
+        >.number__round {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          color: $white;
+          text-align: center;
+          line-height: 24px;
+        }
+      }
+  
+      > .name {
+        margin-left: .5em;
+        width: 7em;
+        padding-right: 1em;
+
+        @include mobile {
+          width: 6em;
+          padding-right: .5em;
+        }
+
+        >.name__partyName {
+          @include title-m;
+        }
+        >.name__cand {
+          @include text-s;
+          margin-top: .3em;
+        }
+      }
+  
+      > .vote {
+        padding-left: 1em;
+        
+        > .vote__percent {
+          @include title-m;
+        }
+        > .vote__num {
+          @include text-m;
+        }
+      }
+    }
+  }
+  
+}
 </style>

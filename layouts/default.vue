@@ -19,30 +19,63 @@ onBeforeMount(async () => {
 
 <template>
   <div class="layout">
-    <div class="layout__header">
-      <h1>{{ $t("UI.name") }}</h1>
-      <select class="layout__nav__select" v-model="$i18n.locale">
+    <div class="header">
+      <h1 class="header__title">{{ $t("UI.name") }}</h1>
+      <select class="header__i18n" v-model="$i18n.locale">
           <option value="en">🇺🇸</option>
           <option value="ch">🇹🇼</option>
       </select>
     </div>
-    <NavBar />
-    <slot></slot>
+    <div class="container">
+      <NavBar />
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
 .layout {
-  &__header {
-    display: flex;
-    /* justify-content: space-between; */
-    align-items: center;
-    padding: 10px;
-    background-color: var(--color-primary);
-    /* color: white; */
+  background-color: $white-light;
+  width: 100vw;
+  @include mobile {
+    min-width: 375px;
+  }
 
-    h1 {
-      margin: 0;
+  > .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  > .container {
+    padding: 2em 3em;
+    height: calc(100vh - 65px);
+
+    @include pad {
+      height: 100%;
+    }
+
+    @include mobile {
+      padding: 1em;
+      width: calc(100vw - 2em);
+      
+    }
+  }
+}
+.header {
+  background-color: $blue;
+  display: flex;
+  padding: 17px 47px;
+
+  &__title {
+    color: $white;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 120%;
+
+    @include mobile {
+        font-size: 20px;
     }
   }
 }

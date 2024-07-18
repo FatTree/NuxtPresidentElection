@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js'
 import { Doughnut } from 'vue-chartjs'
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip);
 
 type _Data = {
     labels: String[],
@@ -14,7 +14,6 @@ type _Data = {
     ]
 }
 
-// 父元件傳來的值
 const props = defineProps({
     chartType: {
         type:[String],
@@ -71,4 +70,15 @@ if(props.chartOptions){
             :options="chartOptions" />
     </div>
 </template>
+<style lang="scss">
+.pie { 
+    width: 120px;
+    height: 120px;
+
+    @include mobile {
+        width: 72px;
+        height: 72px;
+    }
+}
+</style>
 

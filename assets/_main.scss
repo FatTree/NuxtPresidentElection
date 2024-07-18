@@ -1,5 +1,7 @@
 // https://npmjs.com/package/reset-css
 @import './styles/reset';
+@import './styles/_color';
+@import './styles/_font';
 h1 {
     font-size: 20px;
 }

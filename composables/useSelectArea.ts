@@ -1,4 +1,5 @@
 import { TYPE } from "~/assets/js/enum";
+import type { AreaModel } from "~/models/data/ElectionModel";
 
 export const useSelectArea = () => {
     // store
@@ -14,6 +15,9 @@ export const useSelectArea = () => {
     const areaStore = useArea();
     const {
         vliList,
+        selectedCity,
+        selectedDist,
+        selectedVli
     } = storeToRefs(areaStore);
     const { getArea } = areaStore;
 
@@ -23,11 +27,12 @@ export const useSelectArea = () => {
     const ticketStore = useTicket();
     const { getTicket } = ticketStore;
 
-    const setSelectedCity = async (prv_code: string, city_code: string, area_code: string) => {
+    const setSelectedCity = async (selectedArea: AreaModel ,prv_code: string, city_code: string, area_code: string) => {
         // 0. set Codes
         OA_prv_code.value = prv_code;
         OA_city_code.value = city_code;
         OA_area_code.value = area_code;
+        selectedCity.value = selectedArea;
         try {
             // 1. get DList
             await getArea(TYPE.DISC);
@@ -41,9 +46,10 @@ export const useSelectArea = () => {
         }
     }
 
-    const setSelectedDist = async(dept_code: string) => {
+    const setSelectedDist = async(selectedArea: AreaModel, dept_code: string) => {
         // 0. set Codes
         OA_dept_code.value = dept_code;
+        selectedDist.value = selectedArea;
         try {
             // 1. get VliList
             await getArea(TYPE.VLI);
@@ -55,9 +61,10 @@ export const useSelectArea = () => {
         }
     }
 
-    const setSelectedVli = async(li_code: string) => {
+    const setSelectedVli = async(selectedArea: AreaModel, li_code: string) => {
         // 0. set Codes
         OA_li_code.value = li_code;
+        selectedVli.value = selectedArea;
         try {
             // 1. get Profile/Ticket
             await getProfile(TYPE.VLI);

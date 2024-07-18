@@ -1,0 +1,23 @@
+// color
+$white: #fff;
+$white-light: #f5f5f5;
+$white-dark: #BFBFBF;
+$white-darker: #737373;
+
+$black: #000000;
+$black-light: #E6E6E6;
+
+$blue: #262E49;
+$blue-light: #525982;
+$blue-dark: #171C2C; 
+
+// status
+$blue-button-normal: $blue;
+$blue-button-hover: $blue-light;
+$blue-button-click: $blue-dark;
+$blue-button-disabled: $white-dark;
+
+$white-button-normal: $white;
+$white-button-hover: $black-light;
+$white-button-click: $white-darker;
+$white-button-disabled: $white-dark;

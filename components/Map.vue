@@ -39,7 +39,6 @@ onMounted(async () => {
 
 <template>
     <div class="map">
-        <h1>Map</h1>
         <svg viewBox="0 0 510 700" xmlns="http://www.w3.org/2000/svg">
             <g 
                 v-for="(city, index) in mapList" 
@@ -52,7 +51,14 @@ onMounted(async () => {
 </template>
 <style scoped lang="scss">
     .map {
-        width: 40%;
-        border: 1px solid blueviolet
+        width: 35%;
+        @include pad {
+            width: 90%;
+            padding: 3em 0;
+            margin: 0 auto;
+        }
+        > svg > g {
+            cursor: pointer;
+        }
     }
 </style>

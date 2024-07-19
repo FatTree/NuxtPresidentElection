@@ -42,7 +42,7 @@ const {
 const isOpen: Ref<boolean> = ref(true);
 const collapseOverall = () => {
     isOpen.value =!isOpen.value;
-    localStorage.setItem('isOpen', isOpen.value);
+    localStorage.setItem('isOpen', isOpen.value.toString());
 }
 
 onMounted(() => {
@@ -83,7 +83,7 @@ onBeforeMount( async() => {
         </div>
     </div>
 </template>
-<style scoped lang="scss">
+<style scoped lang="scss" scope>
     .none {
         display: none;
     }
@@ -103,6 +103,12 @@ onBeforeMount( async() => {
                 height: 1em;
             }
         }
+
+        @include mobile { 
+            height: 330px;
+            width: calc(100% - 40px);
+        }
+
 
         &__title {
             @include title-l;
@@ -168,7 +174,9 @@ onBeforeMount( async() => {
 
                     @include pad {
                         padding-top: 0;
-                        /* min-height: 90px; */
+                    }
+                    @include mobile {
+                        min-height: 90px;
                     }
                 }
             }

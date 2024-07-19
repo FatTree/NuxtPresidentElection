@@ -90,7 +90,9 @@ const allData = computed(() => {
   }
   
   .ticketContent {
-
+    @include mobile {
+        display: flex;
+    }
     &.ticketBox {
       background-color: v-bind(bgColor);
       border: 3px solid v-bind(color);;
@@ -101,12 +103,17 @@ const allData = computed(() => {
       
   
       @include pad {
-        width: 280px;
+        /* width: 280px; */
         min-width: 280px;
         &:not(:first-child) {
           margin-top: 0;
           margin-left: 1em;
         }
+      }
+
+      @include mobile {
+        min-width: 250px;
+        min-height: 165px;
       }
   
       > .Ticket__bottom {

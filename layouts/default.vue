@@ -47,7 +47,7 @@ onBeforeMount(async () => {
     left: 0;
     right: 0;
 
-    &__i18n {
+    .header__i18n {
       border-radius: 1em;
       margin-left: 2em;
     }
@@ -55,7 +55,7 @@ onBeforeMount(async () => {
 
   > .container {
     padding: 2em 3em;
-    height: calc(100vh - 65px);
+    /* height: calc(100vh - 65px); */
 
     @include pad {
       height: 100%;

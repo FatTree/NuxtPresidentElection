@@ -154,8 +154,22 @@ onBeforeMount( async() => {
                     display: block;
                 }
 
+                > .Profile {
+                    min-height: 232px;
+
+                    @include pad {
+                        min-height: 90px;
+                    }
+                }
+
                 > .Ticket {
                     min-height: 295.5px;
+                    padding-top: 2em;
+
+                    @include pad {
+                        padding-top: 0;
+                        /* min-height: 90px; */
+                    }
                 }
             }
         }

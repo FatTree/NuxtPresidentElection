@@ -62,7 +62,7 @@ const allData = computed(() => {
 <style scoped lang="scss">
     .Profile {
         min-width: 280px;
-        min-height: 232px;
+        
         &__box {
             @include mobile {
                 display: flex;

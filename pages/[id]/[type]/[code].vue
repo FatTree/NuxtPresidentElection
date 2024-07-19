@@ -46,14 +46,13 @@ onBeforeMount( async() => {
     setIdTypeCode(id, TYPE.CITY, code);
     OAId.value = id;
     clear();
-    try {
-        await getArea(TYPE.CITY);
-        await getProfile(TYPE.CITY);
-        await getTicket(TYPE.CITY);
-        
-    } catch (error) {
-        console.log(error)
-    }
+    // try {
+    //     await getArea(TYPE.CITY);
+    //     await getProfile(TYPE.CITY);
+    //     await getTicket(TYPE.CITY);
+    // } catch (error) {
+    //     console.log(error)
+    // }
 });
 </script>
 <template>

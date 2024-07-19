@@ -46,6 +46,11 @@ onBeforeMount(async () => {
     top: 0;
     left: 0;
     right: 0;
+
+    &__i18n {
+      border-radius: 1em;
+      margin-left: 2em;
+    }
   }
 
   > .container {

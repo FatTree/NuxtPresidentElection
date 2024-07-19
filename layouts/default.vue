@@ -68,6 +68,11 @@ onBeforeMount(async () => {
   display: flex;
   padding: 17px 47px;
 
+  @include mobile {
+    width: calc(100vw - 2em);
+    padding: 1em;
+  }
+
   &__title {
     color: $white;
     font-size: 32px;

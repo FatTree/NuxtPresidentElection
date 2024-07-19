@@ -22,7 +22,13 @@ const {
     getMapTicketList
 } = mapStore;
 
+const areaStore = useArea();
+const {
+    selectedArea,
+} = storeToRefs(areaStore);
+
 const clickMap = async(city: MapViewModel) => {
+    selectedArea.value = city;
     setSelectedCity(city.prv_code, city.city_code,city.area_code);
 }
 

@@ -1,5 +1,5 @@
 import { TYPE } from "~/assets/js/enum";
-import type { AreaModel } from "~/models/data/ElectionModel";
+import type { AreaModel, TicketGeneratedModel } from "~/models/data/ElectionModel";
 
 export const useSelectArea = () => {
     // store
@@ -17,7 +17,8 @@ export const useSelectArea = () => {
         vliList,
         selectedCity,
         selectedDist,
-        selectedVli
+        selectedVli,
+        selectedArea
     } = storeToRefs(areaStore);
     const { getArea } = areaStore;
 
@@ -26,13 +27,22 @@ export const useSelectArea = () => {
 
     const ticketStore = useTicket();
     const { getTicket } = ticketStore;
+    const {
+        cityTicketList,
+        distTicketList,
+        vliTicketList
+    } = storeToRefs(ticketStore);
 
-    const setSelectedCity = async (selectedArea: AreaModel ,prv_code: string, city_code: string, area_code: string) => {
+    const setSelectedCity = async (prv_code: string, city_code: string, area_code: string) => {
         // 0. set Codes
         OA_prv_code.value = prv_code;
         OA_city_code.value = city_code;
         OA_area_code.value = area_code;
-        selectedCity.value = selectedArea;
+        selectedCity.value = selectedArea.value;
+        selectedDist.value = {} as AreaModel;
+        selectedVli.value = {} as AreaModel;
+        distTicketList.value = [] as TicketGeneratedModel[];
+        vliTicketList.value = [] as TicketGeneratedModel[];
         try {
             // 1. get DList
             await getArea(TYPE.DISC);
@@ -46,10 +56,12 @@ export const useSelectArea = () => {
         }
     }
 
-    const setSelectedDist = async(selectedArea: AreaModel, dept_code: string) => {
+    const setSelectedDist = async(dept_code: string) => {
         // 0. set Codes
         OA_dept_code.value = dept_code;
-        selectedDist.value = selectedArea;
+        selectedDist.value = selectedArea.value;
+        selectedVli.value = {} as AreaModel;
+        vliTicketList.value = [] as TicketGeneratedModel[];
         try {
             // 1. get VliList
             await getArea(TYPE.VLI);
@@ -61,10 +73,10 @@ export const useSelectArea = () => {
         }
     }
 
-    const setSelectedVli = async(selectedArea: AreaModel, li_code: string) => {
+    const setSelectedVli = async(li_code: string) => {
         // 0. set Codes
         OA_li_code.value = li_code;
-        selectedVli.value = selectedArea;
+        selectedVli.value = selectedArea.value;
         try {
             // 1. get Profile/Ticket
             await getProfile(TYPE.VLI);

@@ -23,6 +23,9 @@ const {
     isCityListPending,
     isDistListPending,
     isVliListPending,
+    selectedCity,
+    selectedDist,
+    selectedVli,
 } = storeToRefs(areaStore);
 
 const { clear } = useClear();
@@ -39,20 +42,23 @@ const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
                 :type="TYPE.CITY" 
                 :code="code" 
                 :list="cityList" 
-                :isPending="isCityListPending" />
+                :isPending="isCityListPending"
+                :selectedName="selectedCity.area_name" />
             <div class="box__buttom">
                 <Area 
                     :id="id" 
                     :type="TYPE.DISC" 
                     :code="code" 
                     :list="distList" 
-                    :isPending="isDistListPending" />
+                    :isPending="isDistListPending"
+                    :selectedName="selectedDist.area_name" />
                 <Area 
                     :id="id" 
                     :type="TYPE.VLI" 
                     :code="code" 
                     :list="vliList" 
-                    :isPending="isVliListPending" />
+                    :isPending="isVliListPending"
+                    :selectedName="selectedVli.area_name" />
             </div>
         </div>
         <div class="clear" @click="clearDebounce">
@@ -68,19 +74,33 @@ const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
 <style scoped lang="scss">
     .AreaGroup {
         display: flex;
+        margin-top: 1em;
         > .box { 
             display: flex;
 
+            @include mobile {
+                width: 100%;
+            }
+
             > .box__buttom { 
                 display: flex;
+
+                @include mobile {
+                    margin-top: .5em;
+
+                    > .Area:not(:first-child) {
+                        margin-left: .5em;
+                    }
+                }
             }
         }
 
         > .clear {
             display: flex;
-            padding: .7em;
+            padding: .5em;
             border-radius: 8px;
             background-color: $blue-button-normal;
+
             > label {
                 color: $white;
                 @include text-m;
@@ -91,9 +111,10 @@ const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
             }
 
             @include mobile {
-                display: block;
+                justify-content: center;
+                align-items: center;
                 width: 2em;
-                text-align: center;
+                margin-left: .5em;
                 > label {
                     display: none;
                 }

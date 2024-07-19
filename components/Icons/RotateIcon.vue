@@ -1,11 +1,11 @@
 <script setup lang="ts">
 type Props = {
     color?: string;
-    size?: number;
+    size?: string;
 }
 const Props = withDefaults(defineProps<Props>(), {
     color: '#fff',
-    size: 30,
+    size: '30',
 });
 </script>
 <template>

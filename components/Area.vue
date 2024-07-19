@@ -2,6 +2,7 @@
 import { TYPE } from "~/assets/js/enum";
 import type { AreaModel } from '~/models/data/ElectionModel';
 import debounce from 'lodash/debounce';
+import RightIcon from '~/components/Icons/RightIcon.vue';
 
 type Props = {
     id: string;
@@ -9,6 +10,7 @@ type Props = {
     code: string;
     list: AreaModel[];
     isPending: boolean;
+    selectedName: string;
 }
 const props = withDefaults(defineProps<Props>(), {
     id: '4d83db17c1707e3defae5dc4d4e9c800',
@@ -16,6 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
     code: '00_000_00_000_0000',
     list: () => ([]),
     isPending: false,
+    selectedName: '--'
 });
 
 // composables
@@ -25,19 +28,38 @@ const {
     setSelectedVli,
 } = useSelectArea();
 
+const areaStore = useArea();
+const {
+    selectedArea,
+    selectedCity,
+    selectedDist,
+    selectedVli,
+} = storeToRefs(areaStore);
+
 
 const disabled: Ref<boolean> = ref(false);
 const selected = ref('please select...');
-const selectedArea: Ref<AreaModel> = ref({});
+const selectedA: Ref<AreaModel> = ref({});
 
-watch( 
-    () => props.list,
-    (list) => {
-        if(props.type === TYPE.CITY && list.length > 0) {
-            selectedArea.value = list[0];
-        }
-    }
-);
+// const selectedName = computed(() => {
+//     if (props.type === TYPE.CITY) {
+//         return selectedCity.value;
+//     } else if (props.type === TYPE.DIST) {
+//         return selectedDist.value;
+//     } else if (props.type === TYPE.VLI) {
+//         return selectedVli.value;
+//     }
+//     return '';
+// })
+
+// watch( 
+//     () => props.list,
+//     (list) => {
+//         if(props.type === TYPE.CITY && list.length > 0) {
+//             selectedA.value = list[0];
+//         }
+//     }
+// );
 
 const cooldownArea = () => {
     disabled.value = true;
@@ -59,8 +81,14 @@ const clickSelect = (ev:Event) => {
 }
 
 const clickOption = (v: string) => {
-    selected.value = v.area_name;
-    selectedArea.value = v;
+    selectedA.value = v;
+    if (props.type === TYPE.CITY) {
+        selectedCity.value = v;
+    } else if (props.type === TYPE.DIST) {
+        selectedDist.value = v;
+    } else if (props.type === TYPE.VLI) {
+        selectedVli.value = v;
+    }
 }
 
 const clickBP = (ev: Event) => {
@@ -72,20 +100,20 @@ const clickBP = (ev: Event) => {
     _options.classList.toggle('none');
 }
 
-watch( selectedArea, async() => {
-    const {...params} = selectedArea.value;
-    
+watch( selectedA, async() => {
+    const {...params} = selectedA.value;
+    selectedArea.value = selectedA.value;
     switch (props.type) {
         case TYPE.CITY:
-            setSelectedCity(selectedArea.value, params.prv_code, params.city_code,params.area_code);
+            setSelectedCity(params.prv_code, params.city_code,params.area_code);
             break;
             
         case TYPE.DISC:
-            setSelectedDist(selectedArea.value, params.dept_code);
+            setSelectedDist(params.dept_code);
             break;
 
         case TYPE.VLI:
-            setSelectedVli(selectedArea.value, params.li_code);
+            setSelectedVli(params.li_code);
             break;
 
         default:
@@ -96,11 +124,13 @@ watch( selectedArea, async() => {
 
 <template>
     <div class="Area">
-        <!-- <p>{{ selected }}</p>
         <div class="select" 
             @click="clickSelect($event)"
             :class="list.length ? '' : 'disabled'">
-            <div v-show="!isPending" class="selected">{{ list ? selectedArea.area_name : '--' }}</div>        
+            <div v-show="!isPending" class="selected">
+                <label>{{ selectedName ? selectedName : '--' }}</label>
+                <RightIcon size="18" color="black" />
+            </div>        
             <div class="select__options none">
                 <div class="options__option" 
                     v-for="item in list" 
@@ -110,10 +140,11 @@ watch( selectedArea, async() => {
                 </div>
             </div>
             <div class="bg none" @click="clickBP($event)"></div>
-        </div> -->
+        </div>
         <div v-show="isPending">loading...</div>
         <!-- BUG: No default value neither PINIA -->
-        <select @change="cooldownArea" :disabled="disabled" v-model="selectedArea">
+        <select @change="cooldownArea" :disabled="disabled" v-model="selectedA">
+            <option selected value="">--</option>
             <option 
                 v-for="(item, i) in list"
                 :key="i" 
@@ -125,6 +156,14 @@ watch( selectedArea, async() => {
 </template>
 
 <style scoped lang="scss">
+.Area {
+    position: relative;
+    width: 100%;
+
+    > select {
+        display: none;
+    }
+}
 .select {
     border: 1px solid $white-button-hover;
     border-radius: 8px;
@@ -132,7 +171,7 @@ watch( selectedArea, async() => {
     cursor: pointer;
     height: 35px;
     min-width: 9em;
-    position: relative;
+    /* position: relative; */
 
     &:not(:last-child) {
         margin-right: 1em;
@@ -148,20 +187,6 @@ watch( selectedArea, async() => {
         border: 1px solid $blue;
     }
 
-    &::after {
-        position: absolute;
-        content: '';
-        width: 24px;
-        height: 24px;
-        /* background-image: url(@/assets/png/chevron-right-solid.svg); */
-        /* background-repeat: no-repeat;
-        background-position: center; */
-        background-size: 16px;
-        rotate: 90deg;
-        right: 0.4em;
-        top: 0.4em;
-    }
-
     &.disabled {
         background-color: $white-button-hover;
         cursor: not-allowed;
@@ -175,15 +200,16 @@ watch( selectedArea, async() => {
         }
     }
 
-    > select {
-        display: none;
-    }
-
     > .selected {
-        position: absolute;
+        /* position: absolute;
         top: 0;
-        left: 0;
-        padding: .2em .5em;
+        left: 0; */
+        display: flex;
+        justify-content: space-between;
+        padding: .5em;
+        > svg {
+            rotate: 90deg;
+        }
     }
 
     > .none {
@@ -194,8 +220,8 @@ watch( selectedArea, async() => {
         background-color: $white;
         border-radius: 8px;
         position: absolute;
-        top: 40px;
-        width: 100%;
+        top: 2.5em;
+        width: calc(100% - 1em);
         overflow-y: scroll;
         z-index: 10;
         max-height: calc(100vh - 300px);

@@ -92,6 +92,7 @@ onBeforeMount( async() => {
         padding: 20px;
         border-radius: 1rem;
         width: 280px;
+        height: 100%;
 
         @include pad {
             width: calc(100% - 40px);
@@ -151,6 +152,10 @@ onBeforeMount( async() => {
     
                 @include mobile {
                     display: block;
+                }
+
+                > .Ticket {
+                    min-height: 295.5px;
                 }
             }
         }

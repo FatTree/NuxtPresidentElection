@@ -127,8 +127,9 @@ watch( selectedA, async() => {
         <div class="select" 
             @click="clickSelect($event)"
             :class="list.length ? '' : 'disabled'">
-            <div v-show="!isPending" class="selected">
+            <div class="selected">
                 <label>{{ selectedName ? selectedName : '--' }}</label>
+                <Loader v-show="isPending" size="1em" border="5px" />
                 <RightIcon size="18" color="black" />
             </div>        
             <div class="select__options none">
@@ -141,7 +142,6 @@ watch( selectedA, async() => {
             </div>
             <div class="bg none" @click="clickBP($event)"></div>
         </div>
-        <div v-show="isPending">loading...</div>
         <!-- BUG: No default value neither PINIA -->
         <select @change="cooldownArea" :disabled="disabled" v-model="selectedA">
             <option selected value="">--</option>

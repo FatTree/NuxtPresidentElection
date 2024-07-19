@@ -94,5 +94,14 @@ const {
                 @include text-m;
             }
         }
+
+        > .Ticket {
+            &:not(:first-child) {
+                margin-top: 1em;
+            }
+            @include pad {
+                margin-top: 0 !important;
+            }
+        }
     }
 </style>

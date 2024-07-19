@@ -28,8 +28,9 @@ const allData = computed(() => {
 
 <template>
     <div class="Profile">
-        <h1 v-show="isPending">Loading~~~</h1>
-        <div class="Profile__box" v-show="profile.area_name">
+        <!-- <h1 v-show="isPending">Loading~~~</h1> -->
+        <Loader v-show="isPending" size="5em" border="10px"/>
+        <div v-show="!isPending" class="Profile__box">
             <div class="upper">
                 <DonutPie
                     v-if="!isPending"
@@ -61,6 +62,7 @@ const allData = computed(() => {
 <style scoped lang="scss">
     .Profile {
         min-width: 280px;
+        min-height: 232px;
         &__box {
             @include mobile {
                 display: flex;

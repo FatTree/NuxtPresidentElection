@@ -48,25 +48,27 @@ const allData = computed(() => {
 </script>
 
 <template>
-  <div v-show="ticketList.length!==0" class="Ticket" :class="isOverall? '' : 'ticketBox'">
-    <div v-show="isPending">~~~~~Loading~~~~~</div>
-    <DonutPie
-        v-if="isOverall"
-        :chartType="'doughnut'"
-        :data="allData" />
-    <div class="Ticket__bottom">
-      <p class="title" v-if="!isOverall">{{ areaName }}</p>
-      <div class="candGroup" v-for="(item, i) in ticketList" :key="i">
-        <div class="number">
-          <div class="number__round" :style="{ backgroundColor: `#${item.party_color}`}">{{ item.cand_no }}</div>
-        </div>
-        <div class="name">
-          <p class="name__partyName">{{ item.party_name }}</p>
-          <p class="name__cand">{{ item.cand_name }} | {{ item.vice_name }}</p>
-        </div>
-        <div class="vote" :style="{ borderLeft: `2px solid #${item.party_color}` }">
-          <p class="vote__percent">{{ item.ticket_percent }} %</p>
-          <p class="vote__num">{{ item.ticket_num.toLocaleString('en') }} {{ $t('UI.ticket') }}</p>
+  <div v-show="ticketList.length!==0" class="Ticket" >
+    <Loader v-show="isPending" size="5em" border="10px"/>
+    <div v-show="!isPending" class="ticketContent" :class="isOverall? '' : 'ticketBox'">
+      <DonutPie
+          v-if="isOverall"
+          :chartType="'doughnut'"
+          :data="allData" />
+      <div class="Ticket__bottom">
+        <p class="title" v-if="!isOverall">{{ areaName }}</p>
+        <div class="candGroup" v-for="(item, i) in ticketList" :key="i">
+          <div class="number">
+            <div class="number__round" :style="{ backgroundColor: `#${item.party_color}`}">{{ item.cand_no }}</div>
+          </div>
+          <div class="name">
+            <p class="name__partyName">{{ item.party_name }}</p>
+            <p class="name__cand">{{ item.cand_name }} | {{ item.vice_name }}</p>
+          </div>
+          <div class="vote" :style="{ borderLeft: `2px solid #${item.party_color}` }">
+            <p class="vote__percent">{{ item.ticket_percent }} %</p>
+            <p class="vote__num">{{ item.ticket_num.toLocaleString('en') }} {{ $t('UI.ticket') }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -76,37 +78,42 @@ const allData = computed(() => {
 <style scoped lang="scss">
 .Ticket {
   width: 280px;
-  margin-top: 3em;
-
-  &.ticketBox {
-    border: 3px solid v-bind(color);;
-    width: calc(100% - 2rem);
-    border-radius: 1rem;
-    padding: 1rem;
-    margin-top: 0;
-    background-color: v-bind(bgColor);
-    &:not(:first-child) {
-      margin-top: 1em;
-    }
-
-    @include pad {
-      width: 280px;
-      min-width: 280px;
-      &:not(:first-child) {
-        margin-top: 0;
-        margin-left: 1em;
-      }
-    }
-
-    > .Ticket__bottom {
-      margin-top: 0;
-
-      > .title {
-        @include title-l;
-        margin-bottom: 1em;
-      }
-    }
+  
+  @include pad {
+    width: 100%;
   }
+
+  .ticketContent {
+    &.ticketBox {
+      background-color: v-bind(bgColor);
+      border: 3px solid v-bind(color);;
+      width: calc(100% - 2em);
+      min-height: 183px;
+      border-radius: 1rem;
+      padding: 1rem;
+      
+  
+      @include pad {
+        width: 280px;
+        min-width: 280px;
+        &:not(:first-child) {
+          margin-top: 0;
+          margin-left: 1em;
+        }
+      }
+  
+      > .Ticket__bottom {
+        margin-top: 0;
+  
+        > .title {
+          @include title-l;
+          margin-bottom: 1em;
+        }
+      }
+    }
+
+  }
+
 
   @include pad {
     margin-top: 0;
@@ -148,8 +155,8 @@ const allData = computed(() => {
   
       > .name {
         margin-left: .5em;
+        margin-right: .5em;
         width: 7em;
-        padding-right: 1em;
 
         @include mobile {
           width: 6em;

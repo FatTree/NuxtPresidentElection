@@ -47,7 +47,7 @@ export const useTicket = defineStore(storeName, () => {
             const _obj: TicketModel = cand;
             const _party: PartyColorModel | undefined = 
                 OAColorTable.value.find( e => (e.party_code === _obj.party_code.toString()));
-            cand.ticket_num = (cand.ticket_num).toLocaleString('en');
+            // cand.ticket_num = (cand.ticket_num).toLocaleString('en');
             return {...cand, vice_name: vice.cand_name, party_color: _party!.color_code}
         }
         const newArr: [] = groupBy(list, "cand_no");
@@ -67,8 +67,12 @@ export const useTicket = defineStore(storeName, () => {
             }
             ticketList.push(combine(pre, vice));
         }
-        
         return ticketList.sort( compare );
+    }
+
+    const setCurrentVal = (list: TicketGeneratedModel[]) => {
+        currentTicketList.value = list;
+        isCurrentTicketPending.value = false;
     }
 
     const getTicket = async(type: string) => {
@@ -77,32 +81,40 @@ export const useTicket = defineStore(storeName, () => {
             switch (type) {
                 case TYPE.NATION:
                     isNationTicketPending.value = true;
+                    isCurrentTicketPending.value = true;
                     res = await getTicketData({id: OAId.value, type: TYPE.NATION, code: OACode.value});
                     nationalTicketList.value = ticketListGenerator(res.data[OACode.value]);
                     isNationTicketPending.value = false;
+                    setCurrentVal(nationalTicketList.value);
                     break;
 
                 case TYPE.CITY:
                     isCityTicketPending.value = true;
+                    isCurrentTicketPending.value = true;
                     res = await getTicketData({id: OAId.value, type: TYPE.CITY, code: OACode.value});
                     cityTicketList.value = ticketListGenerator(res.data[OACode.value].filter((e: TicketModel) => (`${e.prv_code}_${e.city_code}_00_000_0000` === CCode.value)));
                     isCityTicketPending.value = false;
                     isDistTicketPending.value = false;
                     isVliTicketPending.value = false;
+                    setCurrentVal(cityTicketList.value);
                     break;
 
                 case TYPE.DISC:
                     isDistTicketPending.value = true;
+                    isCurrentTicketPending.value = true;
                     res = await getTicketData({id: OAId.value, type: TYPE.DISC, code: CCode.value});
                     distTicketList.value = ticketListGenerator(res.data[CCode.value].filter((e: TicketModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_0000` === DCode.value)));
                     isDistTicketPending.value = false;
+                    setCurrentVal(distTicketList.value);
                     break;
 
                 case TYPE.VLI:
                     isVliTicketPending.value = true;
+                    isCurrentTicketPending.value = true;
                     res = await getTicketData({id: OAId.value, type: TYPE.VLI, code: CCode.value});
                     vliTicketList.value = ticketListGenerator(res.data[DCode.value].filter((e: TicketModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_${e.li_code}` === VCode.value)));
                     isVliTicketPending.value = false;
+                    setCurrentVal(vliTicketList.value);
                     break;
 
                 default:

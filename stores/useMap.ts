@@ -998,10 +998,6 @@ export const useMap = defineStore(storeName, () => {
         const _winnerList: TicketModel[] =  getTicketWinnerList(_keys, _group);
         const _combineList: tempList[] = combineWinnerAndColorList(_winnerList, OAColorTable.value);
         const mapList: MapViewModel[] = combineWinnerColorAndMapList(_combineList, cityPath );
-        console.log("_winnerList",_winnerList);
-        console.log("_combineList",_combineList);
-        console.log("mapList",mapList);
-        
     }
     const getMapTicketList = async() => {
         const res = await getTicketData({id: OAId.value, type: TYPE.CITY, code: OACode.value});

@@ -2,7 +2,8 @@
 import { TYPE } from '~/assets/js/enum';
 import { useOverall } from '~/stores/useOverall';
 import { useTicket } from '~/stores/useTicket';
-
+import { useElectionStore } from '#imports';
+import { useClear } from '#imports';
 
 
 
@@ -35,33 +36,51 @@ const {
     getTicket
 } = ticketStore;
 
+const electionStore = useElectionStore();
+const { electionList } = storeToRefs(electionStore);
+
+const { clear } = useClear();
+
+
 onBeforeMount( async() => {
     setIdTypeCode(id, TYPE.CITY, code);
     OAId.value = id;
-    try {
-        await getArea(TYPE.CITY);
-        await getProfile(TYPE.CITY);
-        await getTicket(TYPE.CITY);
-    } catch (error) {
-        console.log(error)
-    }
+    clear();
+    // try {
+    //     await getArea(TYPE.CITY);
+    //     await getProfile(TYPE.CITY);
+    //     await getTicket(TYPE.CITY);
+    // } catch (error) {
+    //     console.log(error)
+    // }
 });
-
 </script>
 <template>
-    <div>
-        <p>id: {{ id }}</p>
-        <p>type: {{ type }}</p>
-        <p>code: {{ code }}</p>
-    </div>
-    <div>
-        <AreaGroup :id="id" :type="type" :code="code" />
-        <OverallGroup :id="id" :code="code" />
-        <Map :id="id" />
-        <TicketGroup />
+    <div class="page">
+        <div class="page__area">
+            <AreaGroup :id="id" :type="type" :code="code" />
+        </div>
+        <div class="page__content">
+            <OverallGroup :id="id" :code="code" />
+            <Map :id="id" />
+            <TicketGroup />
+        </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
-    
+    .page {
+        &__area {
+            flex-grow: 1;
+        }
+        &__content {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+
+            @include pad {
+                display: block;
+            }
+        }
+    }
 </style>

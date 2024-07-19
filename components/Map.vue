@@ -22,7 +22,13 @@ const {
     getMapTicketList
 } = mapStore;
 
+const areaStore = useArea();
+const {
+    selectedArea,
+} = storeToRefs(areaStore);
+
 const clickMap = async(city: MapViewModel) => {
+    selectedArea.value = city;
     setSelectedCity(city.prv_code, city.city_code,city.area_code);
 }
 
@@ -39,7 +45,6 @@ onMounted(async () => {
 
 <template>
     <div class="map">
-        <h1>Map</h1>
         <svg viewBox="0 0 510 700" xmlns="http://www.w3.org/2000/svg">
             <g 
                 v-for="(city, index) in mapList" 
@@ -52,6 +57,14 @@ onMounted(async () => {
 </template>
 <style scoped lang="scss">
     .map {
-        border: 1px solid blueviolet
+        width: 35%;
+        @include pad {
+            width: 90%;
+            padding: 3em 0;
+            margin: 0 auto;
+        }
+        > svg > g {
+            cursor: pointer;
+        }
     }
 </style>

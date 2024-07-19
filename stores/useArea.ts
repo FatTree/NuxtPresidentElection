@@ -26,6 +26,11 @@ export const useArea = defineStore(storeName, () => {
     const isDistListPending: Ref<boolean> = ref(true);
     const isVliListPending: Ref<boolean> = ref(true);
 
+    const selectedCity: Ref<AreaModel> = ref({} as AreaModel);
+    const selectedDist: Ref<AreaModel> = ref({} as AreaModel);
+    const selectedVli: Ref<AreaModel> = ref({} as AreaModel);
+    const selectedArea: Ref<AreaModel> = ref({} as AreaModel);
+    const areaName = computed(() => (`${selectedCity.value.area_name?selectedCity.value.area_name:''}${selectedDist.value.area_name?'-'+selectedDist.value.area_name:''}${selectedVli.value.area_name?'-'+selectedVli.value.area_name:''}`));
     // methods
     const getArea = async(type:TYPE) => {
         let res;
@@ -68,6 +73,11 @@ export const useArea = defineStore(storeName, () => {
         isCityListPending,
         isDistListPending,
         isVliListPending,
+        selectedCity,
+        selectedDist,
+        selectedVli,
+        selectedArea,
+        areaName,
         getArea,
     }
 });

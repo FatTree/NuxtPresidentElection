@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getColorData } from '~/services';
 
 // store
 const OAStore = useOverall();
@@ -20,22 +19,74 @@ onBeforeMount(async () => {
 
 <template>
   <div class="layout">
-    <h1>{{ $t("UI.name") }}</h1>
-    <h2>{{ $t("UI.session") }}</h2>
-    <select class="layout__nav__select" v-model="$i18n.locale">
-        <option value="en">🇺🇸</option>
-        <option value="ch">🇹🇼</option>
-    </select>
-    <NavBar />
-    <slot></slot>
+    <div class="header">
+      <h1 class="header__title">{{ $t("UI.name") }}</h1>
+      <select class="header__i18n" v-model="$i18n.locale">
+          <option value="en">🇺🇸</option>
+          <option value="ch">🇹🇼</option>
+      </select>
+    </div>
+    <div class="container">
+      <NavBar />
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
 .layout {
-  border: 1px solid #aaa;
+  background-color: $white-light;
+  width: 100vw;
+  @include mobile {
+    min-width: 375px;
+  }
+
+  > .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    &__i18n {
+      border-radius: 1em;
+      margin-left: 2em;
+    }
+  }
+
+  > .container {
+    padding: 2em 3em;
+    height: calc(100vh - 65px);
+
+    @include pad {
+      height: 100%;
+    }
+
+    @include mobile {
+      padding: 1em;
+      width: calc(100vw - 2em);
+      
+    }
+  }
 }
-p {
-  border: 0;
+.header {
+  background-color: $blue;
+  display: flex;
+  padding: 17px 47px;
+
+  @include mobile {
+    width: calc(100vw - 2em);
+    padding: 1em;
+  }
+
+  &__title {
+    color: $white;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 120%;
+
+    @include mobile {
+        font-size: 20px;
+    }
+  }
 }
 </style>

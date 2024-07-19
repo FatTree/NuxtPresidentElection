@@ -30,7 +30,10 @@ export const useProfile = defineStore(storeName, () => {
     const isVliProfilePending: Ref<boolean> = ref(false);
     const isCurrentProfilePending: Ref<boolean> = ref(false);
 
-    
+    const setCurruntProfile = (profile: ProfileModel) => {
+        currentProfile.value = profile;
+        isCurrentProfilePending.value = false;
+    }
 
     const getProfile = async (type: string) => {
         let res;
@@ -43,38 +46,43 @@ export const useProfile = defineStore(storeName, () => {
         try {
             switch (type) {
                 case TYPE.NATION:
-                    isNationProfilePending.value = true;
+                    // isNationProfilePending.value = true;
+                    isCurrentProfilePending.value = true;
                     res = await getProfileData({id: OAId.value, type, code: NCode.value});
                     const _result: ProfileModel = res.data[OACode.value][0];
                     NationProfile.value = formatter(_result);
                     isNationProfilePending.value = false;
+                    setCurruntProfile(NationProfile.value);
                     break;
 
                 case TYPE.CITY:
-                    isCityProfilePending.value = true;
+                    // isCityProfilePending.value = true;
+                    isCurrentProfilePending.value = true;
                     res = await getProfileData({id: OAId.value, type, code: NCode.value});
                     const _cityResult = res.data[OACode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_000_0000` === CCode.value))[0];
                     currentProfile.value = formatter(_cityResult);
                     isCurrentProfilePending.value = false;
-                    isCityProfilePending.value = false;
+                    // isCityProfilePending.value = false;
                     break;
 
                 case TYPE.DISC:
-                    isDistProfilePending.value = true;
+                    // isDistProfilePending.value = true;
+                    isCurrentProfilePending.value = true;
                     res = await getProfileData({id: OAId.value, type: TYPE.DISC, code: CCode.value});
                     const _distResult = res.data[CCode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_00_${e.dept_code}_0000` === DCode.value))[0];
                     currentProfile.value = formatter(_distResult);
                     isCurrentProfilePending.value = false;
-                    isDistProfilePending.value = false;
+                    // isDistProfilePending.value = false;
                     break;
 
                 case TYPE.VLI:
-                    isVliProfilePending.value = true;
+                    // isVliProfilePending.value = true;
+                    isCurrentProfilePending.value = true;
                     res = await getProfileData({id: OAId.value, type: TYPE.VLI, code: CCode.value});
                     const _vliResult = res.data[DCode.value].filter((e: ProfileModel) => (`${e.prv_code}_${e.city_code}_${e.area_code}_${e.dept_code}_${e.li_code}` === VCode.value))[0];
                     currentProfile.value = formatter(_vliResult);
                     isCurrentProfilePending.value = false;
-                    isVliProfilePending.value = false;
+                    // isVliProfilePending.value = false;
                     break;
                     
                 default:

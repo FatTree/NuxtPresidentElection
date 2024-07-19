@@ -1,10 +1,16 @@
 // https://npmjs.com/package/reset-css
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
 @import './styles/reset';
 @import './styles/_color';
 @import './styles/_font';
-h1 {
-    font-size: 20px;
+
+* {
+    font-family: "Noto Sans TC", sans-serif;
 }
+
+// h1 {
+//     font-size: 20px;
+// }
 
 @mixin pad {
     @media(max-width: 1100px) {

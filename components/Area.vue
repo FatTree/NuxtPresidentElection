@@ -239,8 +239,12 @@ watch( selectedA, async() => {
 
         .options__option {
             padding: .3em;
+            @include pad {
+                width: auto;
+            }
             @include mobile {
                 padding: .5em;
+                width: auto;
             }
 
             &:hover {

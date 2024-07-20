@@ -97,6 +97,7 @@ const allData = computed(() => {
 
   @include mobile {
     margin-top: 3em;
+    width: auto;
     display: flex;
   }
   

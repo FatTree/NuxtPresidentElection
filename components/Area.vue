@@ -39,7 +39,7 @@ const {
 
 const disabled: Ref<boolean> = ref(false);
 const selected = ref('please select...');
-const selectedA: Ref<AreaModel> = ref({});
+const selectedA: Ref<AreaModel> = ref({} as AreaModel);
 
 // const selectedName = computed(() => {
 //     if (props.type === TYPE.CITY) {
@@ -72,19 +72,20 @@ const cooldownArea = () => {
 const clickSelect = (ev:Event) => {
     if (!props.list.length) return;
     const _select = ev.currentTarget;
-    const _options = _select.querySelector('div.select__options');
-    const _bg = _select.querySelector('div.bg');
-    
-    _options.classList.toggle('none');
-    _select.classList.toggle('select--selected');
-    _bg.classList.toggle('none');
+    if (_select !== null) {
+        const _options = _select.querySelector('div.select__options');
+        const _bg = _select.querySelector('div.bg');
+        _options.classList.toggle('none');
+        _select.classList.toggle('select--selected');
+        _bg.classList.toggle('none');
+    }
 }
 
-const clickOption = (v: string) => {
+const clickOption = (v: AreaModel) => {
     selectedA.value = v;
     if (props.type === TYPE.CITY) {
         selectedCity.value = v;
-    } else if (props.type === TYPE.DIST) {
+    } else if (props.type === TYPE.DISC) {
         selectedDist.value = v;
     } else if (props.type === TYPE.VLI) {
         selectedVli.value = v;
@@ -94,10 +95,12 @@ const clickOption = (v: string) => {
 const clickBP = (ev: Event) => {
     const _bg: EventTarget = ev.currentTarget!;
     const _options = _bg.parentNode.childNodes[1];
+    const _select = document.querySelector('.select--selected');
     
     ev.stopPropagation()
     _bg.classList.toggle('none');
     _options.classList.toggle('none');
+    if (_select) _select.classList.toggle('select--selected');
 }
 
 watch( selectedA, async() => {
@@ -193,6 +196,10 @@ watch( selectedA, async() => {
 
         > .selected {
             color: $white-dark;
+
+            > svg {
+                fill: $white-dark;
+            }
         }
 
         &::after {
@@ -226,8 +233,15 @@ watch( selectedA, async() => {
         z-index: 10;
         max-height: calc(100vh - 300px);
 
+        @include pad {
+            width: 100%;
+        }
+
         .options__option {
             padding: .3em;
+            @include mobile {
+                padding: .5em;
+            }
 
             &:hover {
                 background-color: $white-button-hover;
@@ -242,6 +256,7 @@ watch( selectedA, async() => {
         right: 0;
         background-color: $white;
         opacity: 0;
+        z-index: 5;
     }
 }
 </style>

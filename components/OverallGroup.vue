@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import RightIcon from '~/components/Icons/RightIcon';
+import RightIcon from '~/components/Icons/RightIcon.vue';
 // props
 type Props = {
     id: string,
@@ -41,18 +41,22 @@ const {
 
 const isOpen: Ref<boolean> = ref(true);
 const collapseOverall = () => {
-    isOpen.value =!isOpen.value;
+    // localStorage.getItem('isOpen') === 'true'? isOpen.value = true : isOpen.value = false;
+    console.log(`1`, isOpen.value);
+    isOpen.value = !isOpen.value;
     localStorage.setItem('isOpen', isOpen.value.toString());
+    console.log(`2`, isOpen.value);
 }
 
-onMounted(() => {
-    const _isOpen = localStorage.getItem('isOpen');
-    if (_isOpen !== null) {
-        isOpen.value = (_isOpen===('true'||'false'));
-    }
-}),
-
 onBeforeMount( async() => {
+    const _isOpen = localStorage.getItem('isOpen');
+    if (_isOpen === null) {
+        localStorage.setItem('isOpen', 'true');
+        isOpen.value = true;
+    } else {
+        isOpen.value = _isOpen === 'true';
+    }
+
     try {
         // Profile:
         isNationProfilePending.value = true;
@@ -64,6 +68,8 @@ onBeforeMount( async() => {
         console.log(error)
     }
 });
+
+
 </script>
 <template lang="">
     <div class="OverallGroup" :class="isOpen ? '' : 'collapse'">

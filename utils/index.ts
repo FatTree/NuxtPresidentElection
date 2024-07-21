@@ -1,4 +1,4 @@
-import type { CodeModel, PartyColorModel, TicketGeneratedModel, TicketGroupModel, TicketModel } from '~/models/data/ElectionModel';
+import type { CodeModel, PartyColorModel, TicketGroupModel, TicketModel } from '~/models/data/ElectionModel';
 import type { MapViewModel, tempList, cityPathModel } from '~/models/view/ViewModel';
 
 /**

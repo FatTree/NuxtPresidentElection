@@ -1,5 +1,6 @@
 import { TYPE } from "~/assets/js/enum";
-import type { AreaModel, ProfileModel, TicketGeneratedModel } from "~/models/data/ElectionModel";
+import type { AreaModel, ProfileModel } from "~/models/data/ElectionModel";
+import type { TicketGeneratedModel } from '~/models/view/ViewModel';
 import { createError } from 'nuxt/app';
 import { FetchError } from "ofetch";
 

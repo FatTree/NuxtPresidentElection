@@ -163,11 +163,6 @@ export type TicketModel = CodeModel & {
     is_vice:string
 }
 
-export type TicketGeneratedModel = TicketModel & {
-    vice_name: string,
-    party_color: string,
-}
-
 export type TicketGroupModel = { 
     [key: string]: TicketModel[] 
 }

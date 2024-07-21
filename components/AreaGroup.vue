@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { ProfileModel, TicketGeneratedModel } from '~/models/data/ElectionModel';
+import type { ProfileModel } from '~/models/data/ElectionModel';
+import type { TicketGeneratedModel } from '~/models/view/ViewModel';
 import { TYPE } from '~/assets/js/enum';
 import debounce from 'lodash/debounce';
 import { useClear } from '#imports';

@@ -181,6 +181,7 @@ watch( selectedA, async() => {
     }
     
     @include mobile {
+        min-width: auto;
         &:first-child {
             margin-right: 0;
         }
@@ -214,6 +215,13 @@ watch( selectedA, async() => {
         display: flex;
         justify-content: space-between;
         padding: .5em;
+
+        > label {
+            overflow:hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
         > svg {
             rotate: 90deg;
         }

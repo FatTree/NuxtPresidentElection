@@ -87,6 +87,13 @@ const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
 
                 @include mobile {
                     margin-top: .5em;
+                    >.Area {
+                        width: 50%;
+
+                        > .select > .selected {
+                            max-width: 10em;
+                        }
+                    }
 
                     > .Area:not(:first-child) {
                         margin-left: .5em;
@@ -115,6 +122,8 @@ const clearDebounce = debounce(clear, 1000, { leading: true, trailing: true });
                 align-items: center;
                 width: 2em;
                 margin-left: .5em;
+                flex-basis: 1em;
+
                 > label {
                     display: none;
                 }

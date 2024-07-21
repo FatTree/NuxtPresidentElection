@@ -71,7 +71,7 @@ onBeforeMount( async() => {
 <style lang="scss" scoped>
     .page {
         &__area {
-            flex-grow: 1;
+            /* flex-grow: 1; */
         }
         &__content {
             margin-top: 2rem;

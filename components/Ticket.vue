@@ -50,35 +50,35 @@ const allData = computed(() => {
 <template>
   <div v-show="ticketList.length!==0" class="Ticket" >
     <Loader v-show="isPending" size="5em" border="10px"/>
-    <Transition>
-      <div v-show="!isPending" class="ticketContent" :class="isOverall? '' : 'ticketBox'">
-        <DonutPie
-            v-if="isOverall"
-            :chartType="'doughnut'"
-            :data="allData" />
-        <div class="Ticket__bottom">
-          <p class="title" v-if="!isOverall">{{ areaName }}</p>
-          <div class="candGroup" v-for="(item, i) in ticketList" :key="i">
-            <div class="number">
-              <div class="number__round" :style="{ backgroundColor: `#${item.party_color}`}">{{ item.cand_no }}</div>
-            </div>
-            <div class="name">
-              <p class="name__partyName">{{ item.party_name }}</p>
-              <p class="name__cand">{{ item.cand_name }} | {{ item.vice_name }}</p>
-            </div>
-            <div class="vote" :style="{ borderLeft: `2px solid #${item.party_color}` }">
-              <p class="vote__percent">{{ item.ticket_percent }} %</p>
-              <p class="vote__num">{{ item.ticket_num.toLocaleString('en') }} {{ $t('UI.ticket') }}</p>
-            </div>
+    <div v-show="!isPending" class="ticketContent" :class="isOverall? '' : 'ticketBox'">
+      <DonutPie
+          v-if="isOverall"
+          :chartType="'doughnut'"
+          :data="allData" />
+      <div class="Ticket__bottom">
+        <p class="title" v-if="!isOverall">{{ areaName }}</p>
+        <div class="candGroup" v-for="(item, i) in ticketList" :key="i">
+          <div class="number">
+            <div class="number__round" :style="{ backgroundColor: `#${item.party_color}`}">{{ item.cand_no }}</div>
+          </div>
+          <div class="name">
+            <p class="name__partyName">{{ item.party_name }}</p>
+            <p class="name__cand">{{ item.cand_name }} | {{ item.vice_name }}</p>
+          </div>
+          <div class="vote" :style="{ borderLeft: `2px solid #${item.party_color}` }">
+            <p class="vote__percent">{{ item.ticket_percent }} %</p>
+            <p class="vote__num">{{ item.ticket_num.toLocaleString('en') }} {{ $t('UI.ticket') }}</p>
           </div>
         </div>
       </div>
-    </Transition>
+    </div>
+    <!-- <Transition>
+    </Transition> -->
   </div>
 </template>
 
 <style scoped lang="scss">
-.v-enter-active,
+/* .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
 }
@@ -86,7 +86,7 @@ const allData = computed(() => {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-}
+} */
 .Ticket {
   width: 280px;
   

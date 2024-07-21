@@ -41,11 +41,8 @@ const {
 
 const isOpen: Ref<boolean> = ref(true);
 const collapseOverall = () => {
-    // localStorage.getItem('isOpen') === 'true'? isOpen.value = true : isOpen.value = false;
-    console.log(`1`, isOpen.value);
     isOpen.value = !isOpen.value;
     localStorage.setItem('isOpen', isOpen.value.toString());
-    console.log(`2`, isOpen.value);
 }
 
 onBeforeMount( async() => {
@@ -102,16 +99,16 @@ onBeforeMount( async() => {
 
         @include pad {
             width: calc(100% - 40px);
-            transition: height .2s ease-in;
-            height: 380px;
+            transition: min-height .2s ease-in;
+            min-height: 380px;
     
             &.collapse {
-                height: 1em;
+                min-height: 1em;
             }
         }
 
         @include mobile { 
-            height: 330px;
+            min-height: 330px;
             width: calc(100% - 40px);
         }
 
@@ -136,6 +133,7 @@ onBeforeMount( async() => {
             }
 
             &.collapseSVG {
+                margin-bottom: 0;
                 > svg {
                     transform: rotate(90deg);
                 }
@@ -145,7 +143,7 @@ onBeforeMount( async() => {
         &__content { 
             @include pad {
                 transition: height .2s ease-in;
-                height: 100%;
+                min-height: 100%;
                 overflow-x: hidden;
 
                 &.collapse {

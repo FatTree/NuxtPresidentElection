@@ -47,10 +47,11 @@ onBeforeMount(async () => {
     left: 0;
     right: 0;
     z-index: 100;
+    min-width: none;
+    min-width: calc(375px - 2em);
 
     .header__i18n {
       border-radius: 1em;
-      margin-left: 2em;
     }
   }
 
@@ -65,7 +66,7 @@ onBeforeMount(async () => {
     @include mobile {
       padding: 1em;
       width: calc(100vw - 2em);
-      
+      min-width: calc(375px - 2em);
     }
   }
 }

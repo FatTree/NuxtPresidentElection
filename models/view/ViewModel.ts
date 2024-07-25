@@ -29,3 +29,9 @@ export type TicketGeneratedModel = TicketModel & {
     vice_name: string,
     party_color: string,
 }
+
+export type colorTicketModel = {
+    color: string,
+    name: string,
+    var?: string
+}

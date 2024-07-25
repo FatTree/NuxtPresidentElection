@@ -68,12 +68,12 @@ onBeforeMount(async () => {
       background-color: #262E49;
       color: $white;
       padding: .5em;
+      cursor: pointer;
     }
   }
 
   > .container {
     padding: 2em 3em;
-    /* height: calc(100vh - 65px); */
 
     @include pad {
       height: 100%;

@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const hex2rgb = (hex: string) => {
     const rgbChar = ['r', 'g', 'b'];
-    
+
     const normal = hex.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
     if (normal) {
         return normal.slice(1).reduce((a, e, i) => { 

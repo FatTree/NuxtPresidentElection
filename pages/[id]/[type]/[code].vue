@@ -21,23 +21,7 @@ const {
     setIdTypeCode
 } = OAStore;
 
-const areaStore = useArea();
-const {
-    getArea,
-} = areaStore;
-
-const profileStore = useProfile();
-const {
-    getProfile
-} = profileStore;
-
-const ticketStore = useTicket();
-const {
-    getTicket
-} = ticketStore;
-
 const electionStore = useElectionStore();
-const { electionList } = storeToRefs(electionStore);
 
 const { clear } = useClear();
 
@@ -46,13 +30,6 @@ onBeforeMount( async() => {
     setIdTypeCode(id, TYPE.CITY, code);
     OAId.value = id;
     clear();
-    // try {
-    //     await getArea(TYPE.CITY);
-    //     await getProfile(TYPE.CITY);
-    //     await getTicket(TYPE.CITY);
-    // } catch (error) {
-    //     console.log(error)
-    // }
 });
 </script>
 <template>
@@ -70,9 +47,6 @@ onBeforeMount( async() => {
 
 <style lang="scss" scoped>
     .page {
-        &__area {
-            flex-grow: 1;
-        }
         &__content {
             margin-top: 2rem;
             display: flex;

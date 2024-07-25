@@ -1,4 +1,4 @@
-import type { CodeModel } from "../data/ElectionModel";
+import type { CodeModel, TicketModel } from "../data/ElectionModel";
 
 export type MapViewModel = CodeModel & {
     name: string[],
@@ -20,7 +20,18 @@ export type tempList = {
     path?: string,
 }
 
-type cityPathModel = {
+export type cityPathModel = {
     name: string[],
     path: string
+}
+
+export type TicketGeneratedModel = TicketModel & {
+    vice_name: string,
+    party_color: string,
+}
+
+export type colorTicketModel = {
+    color: string,
+    name: string,
+    var?: string
 }

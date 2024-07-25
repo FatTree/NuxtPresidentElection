@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TicketGeneratedModel } from '~/models/data/ElectionModel';
+import type { TicketGeneratedModel } from '~/models/view/ViewModel';
 
 type Props = {
   ticketList: TicketGeneratedModel[],

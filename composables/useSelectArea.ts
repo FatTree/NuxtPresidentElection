@@ -1,5 +1,6 @@
 import { TYPE } from "~/assets/js/enum";
-import type { AreaModel, TicketGeneratedModel } from "~/models/data/ElectionModel";
+import type { AreaModel } from "~/models/data/ElectionModel";
+import type { TicketGeneratedModel } from '~/models/view/ViewModel';
 
 export const useSelectArea = () => {
     // store

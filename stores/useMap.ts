@@ -1,6 +1,6 @@
 import { TYPE } from "~/assets/js/enum";
-import type { PartyColorModel, TicketGeneratedModel, TicketGroupModel, TicketModel } from "~/models/data/ElectionModel";
-import type { MapViewModel, tempList } from "~/models/view/ViewModel";
+import type { PartyColorModel, TicketGroupModel, TicketModel } from "~/models/data/ElectionModel";
+import type { MapViewModel, tempList, TicketGeneratedModel } from "~/models/view/ViewModel";
 import { getTicketData } from "~/services";
 
 const storeName = 'map';

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { TYPE } from '~/assets/js/enum';
-import type { PartyColorModel, TicketGeneratedModel, TicketModel } from '~/models/data/ElectionModel';
+import type { PartyColorModel, TicketModel } from '~/models/data/ElectionModel';
+import type { TicketGeneratedModel } from "~/models/view/ViewModel";
 import { getTicketData } from '~/services';
 
 const storeName = 'ticket';

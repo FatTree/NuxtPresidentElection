@@ -7,6 +7,10 @@ const {
     getColor
 } = OAStore;
 
+const openUIKit = () => {
+  window.open("/uiKit");
+}
+
 onBeforeMount(async () => {
   try {
     await getColor();
@@ -25,6 +29,7 @@ onBeforeMount(async () => {
           <option value="en">🇺🇸</option>
           <option value="ch">🇹🇼</option>
       </select>
+      <div class="header__UI" @click="openUIKit">UI Kit</div>
     </div>
     <div class="container">
       <NavBar />
@@ -37,6 +42,7 @@ onBeforeMount(async () => {
 .layout {
   background-color: $white-light;
   width: 100vw;
+  max-width: 1600px;
   @include mobile {
     min-width: 375px;
   }
@@ -50,14 +56,24 @@ onBeforeMount(async () => {
     min-width: none;
     min-width: calc(375px - 2em);
 
-    .header__i18n {
+    > .header__i18n {
       border-radius: 1em;
+      margin-left: 1em;
+    }
+
+    > .header__UI {
+      border-radius: 1em;
+      border: 1px solid $white;
+      margin-left: 1em;
+      background-color: #262E49;
+      color: $white;
+      padding: .5em;
+      cursor: pointer;
     }
   }
 
   > .container {
     padding: 2em 3em;
-    /* height: calc(100vh - 65px); */
 
     @include pad {
       height: 100%;

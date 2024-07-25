@@ -8,7 +8,7 @@ const {
 } = OAStore;
 
 const openUIKit = () => {
-  window.open("/uiKit");
+  window.open(`/uiKit`);
 }
 
 onBeforeMount(async () => {

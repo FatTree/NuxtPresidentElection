@@ -14,7 +14,7 @@
 <template>
     <div>
         <div>  
-            <h1>Error!{{ error.statusCode }}</h1>
+            <h1>[Root] Error:{{ error.statusCode }}</h1>
             <div>
                 <div>{{ error.statusMessage }} 😮</div>
                 <NuxtLink to="/" >Back to the INDEX</NuxtLink>

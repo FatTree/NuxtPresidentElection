@@ -11,7 +11,7 @@
   <div>
     <div>
         <div>  
-            <h1>404</h1>
+            <h1>[Layout]404</h1>
             <div>
                 <div>Oh NO!!Page Not Found 😮</div>
                 <NuxtLink to="/" >Back to the INDEX</NuxtLink>

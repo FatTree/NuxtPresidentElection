@@ -38,13 +38,9 @@ const getData = async (url: string) => {
         if (FetchError.response && FetchError.response.status === 404) {
             throw showError({ statusCode: 404, statusMessage: 'Page Not Found' })
             // navigateTo('/404', { redirectCode: 404 })
+        } else {
+            throw showError({ statusCode: FetchError.response?.status, statusMessage: FetchError.message })
         }
-        // 處理其他類型的錯誤
-        throw createError({
-            statusCode: FetchError.response?.status || 500,
-            statusMessage: FetchError.message || '發生未知錯誤',
-            fatal: true
-        });
     }
 }
 

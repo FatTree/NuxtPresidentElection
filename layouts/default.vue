@@ -8,7 +8,7 @@ const {
 } = OAStore;
 
 const openUIKit = () => {
-  window.open("/uiKit");
+  window.open(`/NuxtPresidentElection/uiKit`);
 }
 
 onBeforeMount(async () => {

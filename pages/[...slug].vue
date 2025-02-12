@@ -1,6 +1,6 @@
 <script setup>
     const error = useError();
-
+    error.showErrorMessage
     const handleError = () => {
         clearError({
             redirect: '/',
@@ -14,9 +14,9 @@
 <template>
     <div>
         <div>  
-            <h1>404</h1>
+            <h1>[Page]</h1>
             <div>
-                <div>Oh NO!!Page Not Found 😮</div>
+                <div>{{ error.showErrorMessage }} 😮</div>
                 <NuxtLink to="/" >Back to the INDEX</NuxtLink>
             </div>
         </div>
